@@ -316,6 +316,7 @@
       mounted: function(){
         this.$nextTick(function(){
           this.getAddressList();
+          console.log(this.$route.params.id);
         })
       },
       computed:{

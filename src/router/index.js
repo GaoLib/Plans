@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import VueResource from 'vue-resource'
 import Trip from '@/components/Trip'
-import ComA from '@/components/ComA'
+import tDetail from '@/components/tDetail'
 import Food from '@/components/Food'
 
 Vue.use(Router)
@@ -16,9 +16,9 @@ export default new Router({
       component: Trip
     },
     {
-      path: '/address',
-      name: 'ComA',
-      component: ComA
+      path: '/tDetail:id',
+      name: 'tDetail',
+      component: tDetail
     },
     {
       path: '/food',

@@ -6,7 +6,12 @@
       <div class="next" v-on:click="changeImg(1)">></div>
     </div>
     <div class="trips">
-      <div class="trip" v-for="item in tripList" v-bind:style="{backgroundImage:'url(\''+item.tripImage+'.jpg\')'}"></div>
+      <div class="trip" v-for="(item,index) in tripList" v-bind:style="{backgroundImage:'url(\''+item.tripImage+'.jpg\')'}">
+        <div class="description" v-bind:class="{'odd':Math.random()> 0.5}">
+          <router-link to="{name:'/tDetail/',params:{id:item.tripId}}"><h4 v-text="item.tripDestination"></h4></router-link>
+          <p v-text="item.tripPrice"></p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -58,7 +63,6 @@ export default {
       let _this = this;
       this.$http.get('../../static/data/data.json').then((res)=>{
         _this.tripList = res.body.result.list;
-        console.log(_this.tripList)
       });
     }
   }
@@ -106,18 +110,38 @@ export default {
     flex-wrap: wrap;
   }
   .trip{
+    width:8rem;
+    height:9rem;
     background-repeat: no-repeat;
     background-size: cover;
     margin:0.2rem 0.6rem;
-    padding:0.4rem 0.6rem;
+    display:flex;
   }
-  .trip:nth-child(odd){
-    width:7rem;
-    height:8rem;
+  .description{
+    align-self: flex-end;
+    width:100%;
+    height:4rem;
+    font-weight: bold;
+    display:flex;
+    justify-content:center;
+    background: linear-gradient(rgba(0,0,0,0.06), rgba(0,0,0,0.8));
+    color:lightgoldenrodyellow;
   }
-  .trip:nth-child(even){
-    width:7rem;
-    height:5rem;
+  .description h4{
+    color:lightgoldenrodyellow;
   }
+  .odd{
+    background: white;
+    color:black;
+  }
+  .odd h4{
+    color:black;
+  }
+  .description p{
+    font-size: 0.4rem;
+    margin-left:1rem;
+    align-self: flex-end;
+  }
+
 
 </style>

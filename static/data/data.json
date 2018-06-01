@@ -5,61 +5,61 @@
       {
         "tripId":"0001",
         "tripDestination":"大理",
-        "tripPrice":19,
+        "tripPrice":"￥1090",
         "tripImage":"static/images/trip/tm-img-01-tn"
       },
       {
         "tripId":"0002",
         "tripDestination":"河南",
-        "tripPrice":190,
+        "tripPrice":"￥690",
         "tripImage":"static/images/trip/tm-img-02-tn"
       },
       {
         "tripId":"0003",
         "tripDestination":"北京",
-        "tripPrice":190,
+        "tripPrice":"￥980",
         "tripImage":"static/images/trip/tm-img-03-tn"
       },
       {
         "tripId":"0004",
         "tripDestination":"台北",
-        "tripPrice":190,
+        "tripPrice":"￥830",
         "tripImage":"static/images/trip/tm-img-04-tn"
       },
       {
         "tripId":"0005",
         "tripDestination":"澳门",
-        "tripPrice":190,
+        "tripPrice":"￥1900",
         "tripImage":"static/images/trip/tm-img-05-tn"
       },
       {
         "tripId":"0006",
         "tripDestination":"三亚",
-        "tripPrice":190,
+        "tripPrice":"￥190",
         "tripImage":"static/images/trip/tm-img-06-tn"
       },
       {
         "tripId":"0007",
         "tripDestination":"拉萨",
-        "tripPrice":190,
+        "tripPrice":"￥190",
         "tripImage":"static/images/trip/tm-img-07-tn"
       },
       {
         "tripId":"0008",
         "tripDestination":"清迈",
-        "tripPrice":190,
+        "tripPrice":"￥190",
         "tripImage":"static/images/trip/tm-img-08-tn"
       },
       {
         "tripId":"0009",
         "tripDestination":"西雅图",
-        "tripPrice":190,
+        "tripPrice":"￥2160",
         "tripImage":"static/images/trip/tm-img-09-tn"
       },
       {
         "tripId":"0010",
         "tripDestination":"新加坡",
-        "tripPrice":190,
+        "tripPrice":"￥190",
         "tripImage":"static/images/trip/tm-img-10-tn"
       }
     ]
