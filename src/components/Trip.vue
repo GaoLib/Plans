@@ -8,7 +8,7 @@
     <div class="trips">
       <div class="trip" v-for="(item,index) in tripList" v-bind:style="{backgroundImage:'url(\''+item.tripImage+'.jpg\')'}">
         <div class="description" v-bind:class="{'odd':Math.random()> 0.5}">
-          <router-link to="{name:'/tDetail/',params:{id:item.tripId}}"><h4 v-text="item.tripDestination"></h4></router-link>
+          <router-link :to="'/tDetail'+item.tripId"><h4 v-text="item.tripDestination"></h4></router-link>
           <p v-text="item.tripPrice"></p>
         </div>
       </div>

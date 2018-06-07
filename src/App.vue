@@ -9,8 +9,8 @@
       <img src="./assets/images/logo.gif">
     </div>
     <div class="menuList" v-show="listFlag">
-      <router-link to="/"><li class="menuItem" v-bind:class="{'choose':chooseTrip}" v-on:click="chooseTrip=true">Trip</li></router-link>
-      <router-link to="/food"><li class="menuItem" v-bind:class="{'choose':!chooseTrip}" v-on:click="chooseTrip=false">Food</li></router-link>
+      <router-link to="/"><li class="menuItem" v-bind:class="{'choose':chooseTrip}" v-on:click="choosePage('trip')">Trip</li></router-link>
+      <router-link to="/food"><li class="menuItem" v-bind:class="{'choose':!chooseTrip}" v-on:click="choosePage('food')">Food</li></router-link>
     </div>
     <router-view/>
   </div>
@@ -26,7 +26,14 @@ export default {
     }
   },
   methods:{
-
+    choosePage: function(type){
+      if(type == 'trip'){
+        this.chooseTrip = true;
+      }else{
+        this.chooseTrip = false;
+      }
+      this.listFlag = false;
+    }
   }
 }
 </script>
