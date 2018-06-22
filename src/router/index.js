@@ -4,6 +4,7 @@ import VueResource from 'vue-resource'
 import Trip from '@/components/Trip'
 import tDetail from '@/components/tDetail'
 import Food from '@/components/Food'
+import Out from '@/components/Out'
 
 Vue.use(Router)
 Vue.use(VueResource)
@@ -24,6 +25,11 @@ export default new Router({
       path: '/food',
       name: 'Food',
       component: Food
+    },
+    {
+      path:'/out',
+      name:'Out',
+      component:Out
     }
   ]
 })

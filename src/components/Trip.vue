@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div class="gallery"
+    <!-- <div class="gallery"
          v-bind:style="{backgroundImage:'url(\'../../static/images/trip/'+curgallery+'.png\')'}">
       <div class="prev" v-on:click="changeImg(0)"><</div>
       <div class="next" v-on:click="changeImg(1)">></div>
-    </div>
+    </div> -->
+    <div class="gallery"></div>
     <div class="trips">
       <div class="trip" v-for="(item,index) in tripList" v-bind:style="{backgroundImage:'url(\''+item.tripImage+'.jpg\')'}">
         <div class="description" v-bind:class="{'odd':Math.random()> 0.5}">
@@ -71,36 +72,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.gallery{
-  width:100%;
-  height:10rem;
-  display:flex;
-  justify-content: space-between;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
-
-  .prev{
-    width:1.6rem;
-    height:1.6rem;
-    border-radius: 50%;
-    background: dimgray;
-    align-self: center;
-    margin-left: 4%;
-    opacity:0.6;
-    font-weight: bold;
-    color:white;
-  }
-  .next{
-    width:1.6rem;
-    height:1.6rem;
-    border-radius: 50%;
-    background: dimgray;
-    align-self: center;
-    margin-right: 4%;
-    opacity:0.6;
-    font-weight: bold;
-    color:white;
+  .gallery{
+    width:100%;
+    height:6rem;
+    background-color: #546B48; 
   }
   .trips{
     width: 96%;
