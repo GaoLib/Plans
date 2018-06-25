@@ -1,11 +1,10 @@
 <template>
   <div>
-    <!-- <div class="gallery"
-         v-bind:style="{backgroundImage:'url(\'../../static/images/trip/'+curgallery+'.png\')'}">
-      <div class="prev" v-on:click="changeImg(0)"><</div>
-      <div class="next" v-on:click="changeImg(1)">></div>
-    </div> -->
-    <div class="gallery"></div>
+    <div class="galleryBox">
+      <img v-bind:src="'../../static/images/trip/'+huangshan+'.png'" class="leftGallery">
+      <img src="../../static/images/trip/chongqing.png" class="centerGallery" v-on:touchstart="_touchStart" v-on:touchend="_touchEnd">
+      <img src="../../static/images/trip/xiamen.png" class="rightGallery">
+    </div>
     <div class="trips">
       <div class="trip" v-for="(item,index) in tripList" v-bind:style="{backgroundImage:'url(\''+item.tripImage+'.jpg\')'}">
         <div class="description" v-bind:class="{'odd':Math.random()> 0.5}">
@@ -23,9 +22,9 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      galleryList:['chongqing','huangshan','xiamen'],
-      curgallery:'chongqing',
-      tripList:[]
+      tripList:[],
+      startX:'',
+      rollList:['chongqing','huangshan','xiamen']
     }
   },
   mounted:function(){
@@ -35,47 +34,139 @@ export default {
     })
   },
   methods:{
-    gallery: function(){
-      let index = this.galleryList.indexOf(this.curgallery);
-      if(index > 1){
-        this.curgallery = this.galleryList[0];
-      }else{
-        this.curgallery = this.galleryList[index+1];
-      }
-    },
-    changeImg: function(type){
-      let index = this.galleryList.indexOf(this.curgallery);
-      const gLength = this.galleryList.length;
-      if(type == 0){
-        if(index == 0){
-          this.curgallery = this.galleryList[index+gLength-1];
-        }else{
-          this.curgallery = this.galleryList[index-1];
-        }
-      }else{
-        if(index == gLength-1){
-          this.curgallery = this.galleryList[index-gLength+1];
-        }else{
-          this.curgallery = this.galleryList[index+1];
-        }
-      }
-    },
     getData: function(){
       let _this = this;
       this.$http.get('../../static/data/data.json').then((res)=>{
         _this.tripList = res.body.result.list;
       });
+    },
+    _touchStart:function(ev){
+      // console.log(ev);
+      ev = ev || event;   //浏览器兼容问题，有的ev，有的用event
+      if(ev.touches.length == 1){
+        this.startX = ev.touches[0].clientX;
+      }
+    },
+    _touchEnd:function(ev){
+      ev = ev || event;
+      // console.log(ev);
+      if(ev.changedTouches.length == 1){
+        if(ev.changedTouches[0].clientX > this.startX){
+          console.log('you');
+        }else if(ev.changedTouches[0].clientX < this.startX){
+          console.log('zuo');
+        }else{
+          console.log('just click');
+        }
+      }
     }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-  .gallery{
+<style lang="scss" scoped>
+@mixin matrix($value...){
+  transform: matrix($value);
+  -ms-transform: matrix($value);   /* IE 9 */
+  -moz-transform: matrix($value);  /* Firefox */
+  -webkit-transform: matrix($value); /* Safari 和 Chrome */
+  -o-transform: matrix($value); 
+}
+@keyframes galleryLeftToCenter{
+  from {
+      width:60%;
+      left:-50%;
+      bottom:1.5rem;
+      position:absolute;
+      @include matrix(1.0, 0.1, 0, 0.9, 0, 0);
+  }
+  to {
+      width:68%;
+      top:1rem;
+      @include matrix(1, 0, 0, 1, 0, 0);
+      left:16%;
+  }
+}
+@keyframes galleryRightToCenter{
+  from {
+      width:60%;
+      right:-50%;
+      bottom:1.5rem;
+      position:absolute;
+      @include matrix(-1, 0.1, 0, 0.9, 0, 0);
+  }
+  to {
+      width:68%;
+      right:16%;
+      top:1rem;
+      @include matrix(1, 0, 0, 1, 0, 0);
+      
+  }
+}
+@keyframes galleryCenterToLeft{
+  from {
+      width:68%;
+      margin:1rem auto;
+      @include matrix(1, 0, 0, 1, 0, 0);
+  }
+  to {
+      width:60%;
+      left:-50%;
+      bottom:0.6rem;
+      position:absolute;
+      @include matrix(1.0, 0.1, 0, 0.9, 0, 0);
+  }
+}
+@keyframes galleryCenterToRight{
+  from {
+      width:68%;
+      margin:1rem auto;
+      @include matrix(1, 0, 0, 1, 0, 0);
+  }
+  to {
+      width:60%;
+      right:-50%;
+      bottom:0.6rem;
+      position:absolute;
+      @include matrix(-1, 0.1, 0, 0.9, 0, 0);
+  }
+}
+  .galleryBox{
     width:100%;
-    height:6rem;
+    height:10rem;
     background-color: #546B48; 
+    text-align:center;
+    overflow:hidden;
+    position:relative;
+
+    .centerGallery{
+      height:8rem;
+      width:68%;
+      margin:1rem auto;
+      border-radius:6%;
+      // animation: galleryCenterToRight 4s 1;
+    }
+    .leftGallery{
+      height:8rem;
+      width:60%;
+      border-radius:6%;
+      left:-50%;
+      bottom:1.5rem;
+      position:absolute;
+      @include matrix(1.0, 0.1, 0, 0.9, 0, 0);
+      // animation: galleryLeftToCenter 4s 1;
+    }
+    .rightGallery{
+      height:8rem;
+      width:60%;
+      border-radius:6%;
+      position:absolute;
+      right:-50%;
+      bottom:1.5rem;
+      @include matrix(-1, 0.1, 0, 0.9, 0, 0);
+      // animation: galleryRightToCenter 4s 1;
+    }
   }
   .trips{
     width: 96%;
