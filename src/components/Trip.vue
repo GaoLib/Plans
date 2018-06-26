@@ -1,16 +1,14 @@
 <template>
   <div>
     <div class="galleryBox">
-      <img v-bind:src="'../../static/images/trip/'+huangshan+'.png'" class="leftGallery">
-      <img src="../../static/images/trip/chongqing.png" class="centerGallery" v-on:touchstart="_touchStart" v-on:touchend="_touchEnd">
-      <img src="../../static/images/trip/xiamen.png" class="rightGallery">
+      <img v-bind:src="'../../static/images/trip/'+rollList[(rollList.indexOf(curGallery)-1+rollList.length) % rollList.length]+'.png'" class="leftGallery">
+      <img v-bind:src="'../../static/images/trip/'+curGallery+'.png'" class="centerGallery" v-on:touchstart="_touchStart" v-on:touchend="_touchEnd">
+      <img v-bind:src="'../../static/images/trip/'+rollList[(rollList.indexOf(curGallery)+1+rollList.length) % rollList.length]+'.png'" class="rightGallery">
     </div>
     <div class="trips">
       <div class="trip" v-for="(item,index) in tripList" v-bind:style="{backgroundImage:'url(\''+item.tripImage+'.jpg\')'}">
-        <div class="description" v-bind:class="{'odd':Math.random()> 0.5}">
-          <router-link :to="'/tDetail'+item.tripId"><h4 v-text="item.tripDestination"></h4></router-link>
-          <p v-text="item.tripPrice"></p>
-        </div>
+          <router-link :to="'/Details/tripD/'+item.tripId"><h2 v-text="item.tripDestination"></h2>
+          <p v-text="item.tripPrice"></p></router-link>
       </div>
     </div>
   </div>
@@ -24,7 +22,8 @@ export default {
     return {
       tripList:[],
       startX:'',
-      rollList:['chongqing','huangshan','xiamen']
+      rollList:['chongqing','huangshan','xiamen'],
+      curGallery:'huangshan'
     }
   },
   mounted:function(){
@@ -49,14 +48,16 @@ export default {
     },
     _touchEnd:function(ev){
       ev = ev || event;
-      // console.log(ev);
+       // console.log(ev);
+       let index = this.rollList.indexOf(this.curGallery);
+       let length = this.rollList.length;
       if(ev.changedTouches.length == 1){
         if(ev.changedTouches[0].clientX > this.startX){
-          console.log('you');
+          this.curGallery = this.rollList[(index - 1 + length) % length]; 
         }else if(ev.changedTouches[0].clientX < this.startX){
-          console.log('zuo');
+          this.curGallery = this.rollList[(index + 1 + length) % length]; 
         }else{
-          console.log('just click');
+          // console.log('just click');
         }
       }
     }
@@ -73,65 +74,65 @@ export default {
   -webkit-transform: matrix($value); /* Safari 和 Chrome */
   -o-transform: matrix($value); 
 }
-@keyframes galleryLeftToCenter{
-  from {
-      width:60%;
-      left:-50%;
-      bottom:1.5rem;
-      position:absolute;
-      @include matrix(1.0, 0.1, 0, 0.9, 0, 0);
-  }
-  to {
-      width:68%;
-      top:1rem;
-      @include matrix(1, 0, 0, 1, 0, 0);
-      left:16%;
-  }
-}
-@keyframes galleryRightToCenter{
-  from {
-      width:60%;
-      right:-50%;
-      bottom:1.5rem;
-      position:absolute;
-      @include matrix(-1, 0.1, 0, 0.9, 0, 0);
-  }
-  to {
-      width:68%;
-      right:16%;
-      top:1rem;
-      @include matrix(1, 0, 0, 1, 0, 0);
+// @keyframes galleryLeftToCenter{
+//   from {
+//       width:60%;
+//       left:-50%;
+//       bottom:1.5rem;
+//       position:absolute;
+//       @include matrix(1.0, 0.1, 0, 0.9, 0, 0);
+//   }
+//   to {
+//       width:68%;
+//       top:1rem;
+//       @include matrix(1, 0, 0, 1, 0, 0);
+//       left:16%;
+//   }
+// }
+// @keyframes galleryRightToCenter{
+//   from {
+//       width:60%;
+//       right:-50%;
+//       bottom:1.5rem;
+//       position:absolute;
+//       @include matrix(-1, 0.1, 0, 0.9, 0, 0);
+//   }
+//   to {
+//       width:68%;
+//       right:16%;
+//       top:1rem;
+//       @include matrix(1, 0, 0, 1, 0, 0);
       
-  }
-}
-@keyframes galleryCenterToLeft{
-  from {
-      width:68%;
-      margin:1rem auto;
-      @include matrix(1, 0, 0, 1, 0, 0);
-  }
-  to {
-      width:60%;
-      left:-50%;
-      bottom:0.6rem;
-      position:absolute;
-      @include matrix(1.0, 0.1, 0, 0.9, 0, 0);
-  }
-}
-@keyframes galleryCenterToRight{
-  from {
-      width:68%;
-      margin:1rem auto;
-      @include matrix(1, 0, 0, 1, 0, 0);
-  }
-  to {
-      width:60%;
-      right:-50%;
-      bottom:0.6rem;
-      position:absolute;
-      @include matrix(-1, 0.1, 0, 0.9, 0, 0);
-  }
-}
+//   }
+// }
+// @keyframes galleryCenterToLeft{
+//   from {
+//       width:68%;
+//       margin:1rem auto;
+//       @include matrix(1, 0, 0, 1, 0, 0);
+//   }
+//   to {
+//       width:60%;
+//       left:-50%;
+//       bottom:0.6rem;
+//       position:absolute;
+//       @include matrix(1.0, 0.1, 0, 0.9, 0, 0);
+//   }
+// }
+// @keyframes galleryCenterToRight{
+//   from {
+//       width:68%;
+//       margin:1rem auto;
+//       @include matrix(1, 0, 0, 1, 0, 0);
+//   }
+//   to {
+//       width:60%;
+//       right:-50%;
+//       bottom:0.6rem;
+//       position:absolute;
+//       @include matrix(-1, 0.1, 0, 0.9, 0, 0);
+//   }
+// }
   .galleryBox{
     width:100%;
     height:10rem;
@@ -145,6 +146,7 @@ export default {
       width:68%;
       margin:1rem auto;
       border-radius:6%;
+      // @include matrix(1, 0, 0, 1, 0, 0);
       // animation: galleryCenterToRight 4s 1;
     }
     .leftGallery{
@@ -170,44 +172,29 @@ export default {
   }
   .trips{
     width: 96%;
-    display:flex;
     margin-top:0.5rem;
     margin-left: 2%;
-    flex-wrap: wrap;
+
+    .trip{
+      width:94%;
+      height:9rem;
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin:1.2rem 0.6rem;
+      text-align:center;
+      overflow:hidden;
+ 
+      h2{
+        margin-top:2.4rem;
+        color:white;
+      }
+      p{
+        color:white;
+      }
+    }
+  
   }
-  .trip{
-    width:8rem;
-    height:9rem;
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin:0.2rem 0.6rem;
-    display:flex;
-  }
-  .description{
-    align-self: flex-end;
-    width:100%;
-    height:4rem;
-    font-weight: bold;
-    display:flex;
-    justify-content:center;
-    background: linear-gradient(rgba(0,0,0,0.06), rgba(0,0,0,0.8));
-    color:lightgoldenrodyellow;
-  }
-  .description h4{
-    color:lightgoldenrodyellow;
-  }
-  .odd{
-    background: white;
-    color:black;
-  }
-  .odd h4{
-    color:black;
-  }
-  .description p{
-    font-size: 0.4rem;
-    margin-left:1rem;
-    align-self: flex-end;
-  }
+
 
 
 </style>

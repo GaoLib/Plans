@@ -4,73 +4,153 @@
     "list":[
       {
         "tripId":"0001",
-        "tripDestination":"大理",
+        "tripDestination":"Dali",
+        "tripDescription":"xxxxxxxxxx Dali xxxxxxx",
         "tripPrice":"￥1090",
-        "tripImage":"static/images/trip/tm-img-01-tn",
-        "route":"01:xxxxxxxx---xxxxxxxxx"
+        "tripImage":"static/images/trip/tm-img-01",
+        "done":"true",
+        "route":
+          {
+            "Day1":"xxxxxxxxxDay1xxxxxxx",
+            "Day2":"xxxxxxxxxDay2xxxxxxx",
+            "Day3":"xxxxxxxxxDay3xxxxxxx"
+          }
+        
       },
       {
         "tripId":"0002",
-        "tripDestination":"河南",
+        "tripDestination":"Henan",
+        "tripDescription":"xxxxxxxxxx",
         "tripPrice":"￥690",
-        "tripImage":"static/images/trip/tm-img-02-tn",
-        "route":"02:xxxxxxxx---xxxxxxxxx"
+        "tripImage":"static/images/trip/tm-img-02",
+        "done":"false",
+        "route":
+          {
+            "Day1":"xxxxxxxxxDay1xxxxxxx",
+            "Day2":"xxxxxxxxxDay2xxxxxxx",
+            "Day3":"xxxxxxxxxDay3xxxxxxx"
+          }
+        
       },
       {
         "tripId":"0003",
-        "tripDestination":"北京",
+        "tripDestination":"Beijing",
+        "tripDescription":"xxxxxxxxxx",
         "tripPrice":"￥980",
-        "tripImage":"static/images/trip/tm-img-03-tn",
-        "route":"03:xxxxxxxx---xxxxxxxxx"
+        "tripImage":"static/images/trip/tm-img-03",
+        "done":"false",
+        "route":
+          {
+            "Day1":"xxxxxxxxxDay1xxxxxxx",
+            "Day2":"xxxxxxxxxDay2xxxxxxx",
+            "Day3":"xxxxxxxxxDay3xxxxxxx"
+          }
+        
       },
       {
         "tripId":"0004",
-        "tripDestination":"台北",
+        "tripDestination":"Taipei",
+        "tripDescription":"xxxxxxxxxx",
         "tripPrice":"￥830",
-        "tripImage":"static/images/trip/tm-img-04-tn",
-        "route":"04:xxxxxxxx---xxxxxxxxx"
+        "tripImage":"static/images/trip/tm-img-04",
+        "done":"false",
+        "route":
+          {
+            "Day1":"xxxxxxxxxDay1xxxxxxx",
+            "Day2":"xxxxxxxxxDay2xxxxxxx",
+            "Day3":"xxxxxxxxxDay3xxxxxxx"
+          }
+        
       },
       {
         "tripId":"0005",
-        "tripDestination":"澳门",
+        "tripDestination":"Macau",
+        "tripDescription":"xxxxxxxxxx",
         "tripPrice":"￥1900",
-        "tripImage":"static/images/trip/tm-img-05-tn",
-        "route":"05:xxxxxxxx---xxxxxxxxx"
+        "tripImage":"static/images/trip/tm-img-05",
+        "done":"false",
+        "route":
+          {
+            "Day1":"xxxxxxxxxDay1xxxxxxx",
+            "Day2":"xxxxxxxxxDay2xxxxxxx",
+            "Day3":"xxxxxxxxxDay3xxxxxxx"
+          }
+        
       },
       {
         "tripId":"0006",
-        "tripDestination":"三亚",
+        "tripDestination":"Sanya",
+        "tripDescription":"xxxxxxxxxx",
         "tripPrice":"￥190",
-        "tripImage":"static/images/trip/tm-img-06-tn",
-        "route":"06:xxxxxxxx---xxxxxxxxx"
+        "tripImage":"static/images/trip/tm-img-06",
+        "done":"false",
+        "route":
+          {
+            "Day1":"xxxxxxxxxDay1xxxxxxx",
+            "Day2":"xxxxxxxxxDay2xxxxxxx",
+            "Day3":"xxxxxxxxxDay3xxxxxxx"
+          }
+        
       },
       {
         "tripId":"0007",
-        "tripDestination":"拉萨",
+        "tripDestination":"Lhasa",
+        "tripDescription":"xxxxxxxxxx",
         "tripPrice":"￥190",
-        "tripImage":"static/images/trip/tm-img-07-tn",
-        "route":"07:xxxxxxxx---xxxxxxxxx"
+        "tripImage":"static/images/trip/tm-img-07",
+        "done":"false",
+        "route":
+          {
+            "Day1":"xxxxxxxxxDay1xxxxxxx",
+            "Day2":"xxxxxxxxxDay2xxxxxxx",
+            "Day3":"xxxxxxxxxDay3xxxxxxx"
+          }
+        
       },
       {
         "tripId":"0008",
-        "tripDestination":"清迈",
+        "tripDestination":"Chiengmai",
+        "tripDescription":"xxxxxxxxxx",
         "tripPrice":"￥190",
-        "tripImage":"static/images/trip/tm-img-08-tn",
-        "route":"08:xxxxxxxx---xxxxxxxxx"
+        "tripImage":"static/images/trip/tm-img-08",
+        "done":"true",
+        "route":
+          {
+            "Day1":"xxxxxxxxxDay1xxxxxxx",
+            "Day2":"xxxxxxxxxDay2xxxxxxx",
+            "Day3":"xxxxxxxxxDay3xxxxxxx"
+          }
+        
       },
       {
         "tripId":"0009",
-        "tripDestination":"西雅图",
+        "tripDestination":"Seattle",
+        "tripDescription":"xxxxxxxxxx",
         "tripPrice":"￥2160",
-        "tripImage":"static/images/trip/tm-img-09-tn",
-        "route":"09:xxxxxxxx---xxxxxxxxx"
+        "tripImage":"static/images/trip/tm-img-09",
+        "done":"false",
+        "route":
+          {
+            "Day1":"xxxxxxxxxDay1xxxxxxx",
+            "Day2":"xxxxxxxxxDay2xxxxxxx",
+            "Day3":"xxxxxxxxxDay3xxxxxxx"
+          }
+        
       },
       {
         "tripId":"0010",
-        "tripDestination":"新加坡",
+        "tripDestination":"Singapore",
+        "tripDescription":"xxxxxxxxxx",
         "tripPrice":"￥190",
-        "tripImage":"static/images/trip/tm-img-10-tn",
-        "route":"10:xxxxxxxx---xxxxxxxxx"
+        "tripImage":"static/images/trip/tm-img-10",
+        "done":"false",
+        "route":
+          {
+            "Day1":"xxxxxxxxxDay1xxxxxxx",
+            "Day2":"xxxxxxxxxDay2xxxxxxx",
+            "Day3":"xxxxxxxxxDay3xxxxxxx"
+          }
+        
       }
     ]
   }

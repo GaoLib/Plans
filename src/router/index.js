@@ -2,9 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import VueResource from 'vue-resource'
 import Trip from '@/components/Trip'
-import tDetail from '@/components/tDetail'
+import Details from '@/components/Details'
 import Food from '@/components/Food'
 import Out from '@/components/Out'
+import tripD from '@/components/tripD'
+import Index from '@/Index'
 
 Vue.use(Router)
 Vue.use(VueResource)
@@ -13,23 +15,22 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Trip',
-      component: Trip
+      name: 'Index',
+      component: Index,
+      children:[
+        { path: 'trip', component: Trip },
+        { path: 'food', component: Food },
+        { path: 'out', component: Out }
+      ]
     },
     {
-      path: '/tDetail:id',
-      name: 'tDetail',
-      component: tDetail
-    },
-    {
-      path: '/food',
-      name: 'Food',
-      component: Food
-    },
-    {
-      path:'/out',
-      name:'Out',
-      component:Out
-    }
+      path: '/details',
+      name: 'Details',
+      component: Details,
+       children:[
+                    { path: 'tripD/:id', component: tripD}
+                ]
+
+     }
   ]
 })
