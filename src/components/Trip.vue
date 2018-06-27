@@ -7,7 +7,7 @@
     </div>
     <div class="trips">
       <div class="trip" v-for="(item,index) in tripList" v-bind:style="{backgroundImage:'url(\''+item.tripImage+'.jpg\')'}">
-          <router-link :to="'/Details/tripD/'+item.tripId"><h2 v-text="item.tripDestination"></h2>
+          <router-link :to="'/Details/tripD/'+item.Id"><h2 v-text="item.tripDestination"></h2>
           <p v-text="item.tripPrice"></p></router-link>
       </div>
     </div>
@@ -35,7 +35,7 @@ export default {
   methods:{
     getData: function(){
       let _this = this;
-      this.$http.get('../../static/data/data.json').then((res)=>{
+      this.$http.get('../../static/data/tripD.json').then((res)=>{
         _this.tripList = res.body.result.list;
       });
     },

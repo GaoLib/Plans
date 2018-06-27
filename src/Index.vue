@@ -16,22 +16,21 @@
 
 <script>
     export default {
-      name: "Out",
+      name: "Index",
       data(){
           return{
-             curPage:'trip'
+             curPage:''
           }
         },
       mounted:function(){
           this.$nextTick(function(){
-            //setInterval(this.gallery,3000);
-            
+            this.curPage = window.localStorage.getItem('page');
           })
         },
       methods:{
           choosePage: function(type){
             this.curPage = type;
-            // console.log(this.curPage);
+            window.localStorage.setItem('page',this.curPage);
           }
       }
     }
@@ -45,6 +44,7 @@
     top:0;
     left:0;
     background-color:white;
+    overflow:hidden;
 
     img{
      width:8%;

@@ -1,10 +1,13 @@
 <template>
   <div class="plan">
-    <img v-bind:src="'../../'+planList.tripImage+'.jpg'" />
-    <h1 v-html="planList.tripDestination"></h1>
-    <textarea placeholder="Description Here" disabled class="description" v-html="planList.tripDescription"></textarea>
+    <img v-bind:src="'../../'+foodList.foodImage+'.jpg'" />
+    <h1 v-html="foodList.foodDestination"></h1>
+    <div class="addressContent">
+      <icon name="position" class="position" scale="3"></icon>
+    <textarea placeholder="Address Here" disabled class="address" v-html="foodList.foodAddress"></textarea>
+    </div>
     <div class="route">
-      <div class="day" v-for="(value , key) in planList.route">
+      <div class="day" v-for="(value , key) in foodList.foods">
         <div class="key">{{key}}</div>
         <div class="value">{{value}}</div>
       </div>
@@ -14,10 +17,10 @@
 
 <script>
     export default {
-        name: "tirpD",
+        name: "foodD",
       data(){
           return {
-            planList:[]
+            foodList:[]
           }
       },
       mounted: function(){
@@ -29,12 +32,12 @@
       methods:{
         getAddressList: function(){
           let _this = this;
-          this.$http.get('../../static/data/tripD.json').then((res)=>{
+          this.$http.get('../../static/data/foodD.json').then((res)=>{
             let lists = res.body.result.list;
             lists.forEach(function(curlist){
               if(curlist.Id == _this.$route.params.id){
-                _this.planList = curlist;
-                // console.log(_this.planList);
+                _this.foodList = curlist;
+                // console.log(_this.foodList);
               }
             })
           })
@@ -52,14 +55,32 @@
       width:100%;
       height:10rem;
     }
-    .description{
-      width:80%;
-      border:none;
-      background-color:white;
-      text-align:center;
+    // .description{
+    //   width:80%;
+    //   border:none;
+    //   background-color:red;
+    //   text-align:center;
+    //   color:#566E4A;
+    // }
+    .addressContent{
+      width:100%;
+      // overflow:hidden;
+
+      .position{
+        margin-left:10%;
+        vertical-align:middle;
+      }
+      .address{
+        width:80%;
+        border:none;
+        background-color: white;
+        color: #566E4A;
+        vertical-align:middle;
+        padding-top: 1rem;
+      }
     }
     .route{
-       // margin-bottom:2rem;
+       margin-top:2rem;
 
       .day{
         margin-top:1rem;

@@ -1,11 +1,14 @@
 <template>
-  <div class="foods">
-    <div class="food" v-for="(item,index) in foodList" v-bind:style="{backgroundImage:'url(\''+item.foodImage+'.jpg\')'}">
-        <div class="description" v-bind:class="{'odd':Math.random()> 0.5}">
-          <h4 v-text="item.foodDestination"></h4>
-          <p v-text="item.foodPrice"></p>
-        </div>
+  <div>
+    <div class="types">
+      <img v-for="type in typeList" :src="curFoodType === type ? '../../static/images/food/' + type + 'Active.png' : '../../static/images/food/' + type + '.png' " class="type" @click="foodType(type)">
     </div>
+    <div class="foods">
+    <div class="food" v-for="(item,index) in filterList" v-bind:style="{backgroundImage:'url(\''+item.foodImage+'.jpg\')'}">
+         <router-link :to="'/Details/foodD/'+item.Id"><h2 v-text="item.foodDestination"></h2>
+          <p v-text="item.foodPrice"></p></router-link>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -14,9 +17,23 @@
       name: "Food",
       data(){
           return{
-            foodList:[]
+            foodList:[],
+            curFoodType:'',
+            typeList:['hotpot','cake','drink','noodle','bar','seafood','westernfood','icecream'],
+            filterList:[]
           }
         },
+      computed:{
+        // filterList:function(){
+        //   if(this.curFoodType){
+        //       return this.foodList.filter(function(item){
+        //         return item.type == this.curFoodType;
+        //     })
+        //   }else{
+        //     return this.foodList;
+        //   }
+        // }
+      },
       mounted:function(){
           this.$nextTick(function(){
             //setInterval(this.gallery,3000);
@@ -26,53 +43,58 @@
       methods:{
           getData: function(){
             let _this=this;
-            this.$http.get('../../static/data/food.json').then((res)=>{
+            this.$http.get('../../static/data/foodD.json').then((res)=>{
               _this.foodList = res.body.result.list;
+              _this.filterList = res.body.result.list;
             })
+          },
+          foodType:function(type){
+            if(this.curFoodType !== type){
+              this.curFoodType = type;
+              this.filterList = this.foodList.filter(function(item){
+                return item.type == type;
+              })
+            }else{
+              this.curFoodType = '';
+              this.filterList = this.foodList;
+            }
+            
           }
       }
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.types{
+  width:80%;
+  margin-left:14%;
+  // width:100%;
+  // text-align:center;
+
+  .type{
+    margin:0.4rem 3%;
+  }
+  
+}
   .foods{
     width: 96%;
-    display:flex;
-    margin-top:0.5rem;
     margin-left: 2%;
-    flex-wrap: wrap;
   }
   .food{
-    width:8rem;
+    width:94%;
     height:9rem;
     background-repeat: no-repeat;
     background-size: cover;
-    margin:0.2rem 0.6rem;
-    display:flex;
-  }
-  .description{
-    align-self: flex-end;
-    width:100%;
-    height:4rem;
-    font-weight: bold;
-    display:flex;
-    justify-content:center;
-    background: linear-gradient(rgba(0,0,0,0.06), rgba(0,0,0,0.8));
-    color:lightgoldenrodyellow;
-  }
-  .description h4{
-    color:lightgoldenrodyellow;
-  }
-  .odd{
-    background: white;
-    color:black;
-  }
-  .odd h4{
-    color:black;
-  }
-  .description p{
-    font-size: 0.4rem;
-    margin-left:1rem;
-    align-self: flex-end;
+    margin:1.2rem 0.6rem;
+    text-align:center;
+    overflow:hidden;
+
+    h2{
+      margin-top:2.4rem;
+      color:white;
+    }
+    p{
+      color:white;
+    }
   }
 </style>

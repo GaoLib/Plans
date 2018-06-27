@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="header">
-      <router-link to="/trip"><icon class="back" name="back" scale="3"></icon></router-link>
-      <img v-bind:src="done ? '../../static/images/trip/doneActive.png' : '../../static/images/trip/done.png'" v-on:click="haveDone">
+      <img class="back" src="../../static/images/back.png" v-on:click="$router.back(-1)">
+      <img v-bind:src="done === 'true' ? '../../static/images/trip/doneActive.png' : '../../static/images/trip/done.png'" v-on:click="haveDone" class="done">
     </div>
     <div class="details"><router-view/></div>
     <div class="edit"><icon name="edit" scale="3" class="editIcon"></icon></div>
@@ -20,16 +20,17 @@
       mounted: function(){
         this.$nextTick(function(){
           this.getAddressList();
-          // console.log(this.$route.params.id);
+          // console.log(this.$route);
         })
       },
       methods:{
         getAddressList: function(){
           let _this = this;
-          this.$http.get('../../static/data/data.json').then((res)=>{
+          let path = this.$route.fullPath.split('/')[2];
+          this.$http.get('../../static/data/'+path+'.json').then((res)=>{
             let lists = res.body.result.list;
             lists.forEach(function(curlist){
-              if(curlist.tripId == _this.$route.params.id){
+              if(curlist.Id == _this.$route.params.id){
                 _this.done = curlist.done;
                 // console.log(_this.done);
               }
@@ -53,7 +54,7 @@
       margin-top:0.6rem;
       margin-left:4%;
     }
-    img{
+    .done{
       float:right;
       margin-right:4%;
       margin-top:0.5rem;

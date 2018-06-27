@@ -6,6 +6,7 @@ import Details from '@/components/Details'
 import Food from '@/components/Food'
 import Out from '@/components/Out'
 import tripD from '@/components/tripD'
+import foodD from '@/components/foodD'
 import Index from '@/Index'
 
 Vue.use(Router)
@@ -28,7 +29,8 @@ export default new Router({
       name: 'Details',
       component: Details,
        children:[
-                    { path: 'tripD/:id', component: tripD}
+                    { path: 'tripD/:id', component: tripD},
+                    { path: 'foodD/:id', component: foodD}
                 ]
 
      }
