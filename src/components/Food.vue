@@ -8,6 +8,9 @@
          <router-link :to="'/Details/foodD/'+item.Id"><h2 v-text="item.foodDestination"></h2>
           <p v-text="item.foodPrice"></p></router-link>
     </div>
+    <div class="food add">
+      <router-link to="/add"><img src="../../static/images/add.png"></router-link>
+    </div>
   </div>
   </div>
 </template>
@@ -95,6 +98,14 @@
     }
     p{
       color:white;
+    }
+  }
+  .add{
+    background-color: #546B48; 
+    height:6rem;
+
+    img{
+       margin-top:2rem;
     }
   }
 </style>

@@ -45,6 +45,7 @@
     left:0;
     background-color:white;
     overflow:hidden;
+    z-index:100;
 
     img{
      width:8%;
@@ -76,6 +77,7 @@
     bottom:0;
     left:0;
     text-align:center;
+    z-index:100;
 
     &:before{
       content:'';

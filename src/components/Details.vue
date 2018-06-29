@@ -49,6 +49,10 @@
     width:100%;
     height:3rem;
     background-color: white;
+    position:fixed;
+    z-index:100;
+    top:0;
+    left:0;
 
     .back{
       margin-top:0.6rem;

@@ -10,6 +10,9 @@
           <router-link :to="'/Details/tripD/'+item.Id"><h2 v-text="item.tripDestination"></h2>
           <p v-text="item.tripPrice"></p></router-link>
       </div>
+      <div class="trip add">
+        <router-link to="/add/tripA"><img src="../../static/images/add.png"></router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -37,6 +40,7 @@ export default {
       let _this = this;
       this.$http.get('../../static/data/tripD.json').then((res)=>{
         _this.tripList = res.body.result.list;
+        // console.log(_this.tripList);
       });
     },
     _touchStart:function(ev){
@@ -192,7 +196,14 @@ export default {
         color:white;
       }
     }
-  
+    .add{
+      background-color: #546B48; 
+      height:6rem;
+
+      img{
+        margin-top:2rem;
+      }
+    }
   }
 
 
