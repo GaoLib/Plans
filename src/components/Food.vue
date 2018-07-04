@@ -9,7 +9,7 @@
           <p v-text="item.foodPrice"></p></router-link>
     </div>
     <div class="food add">
-      <router-link to="/add"><img src="../../static/images/add.png"></router-link>
+      <router-link to="/add/foodA"><img src="../../static/images/add.png"></router-link>
     </div>
   </div>
   </div>

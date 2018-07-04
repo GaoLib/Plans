@@ -11,6 +11,8 @@ import Index from '@/Index'
 import outD from '@/components/outD'
 import Add from '@/components/Add'
 import tripA from '@/components/tripA'
+import foodA from '@/components/foodA'
+import outA from '@/components/outA'
 
 Vue.use(Router)
 Vue.use(VueResource)
@@ -43,7 +45,9 @@ export default new Router({
       name:'Add',
       component:Add,
       children:[
-        { path:'tripA',component:tripA }
+        { path:'tripA',component:tripA },
+        { path:'foodA',component:foodA },
+        { path:'outA',component:outA }
       ]
      }
   ]

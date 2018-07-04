@@ -4,7 +4,8 @@
       <p class="back" v-on:click="$router.back(-1)">Cancel</p>
     </div>
     <div class="addcontent"><router-view/></div>
-    <div class="addbtn">Add</div>
+    <div class="addbtn" @click="add">Add</div>
+    <div class="popMessage" v-if="success">Successful</div>
   </div>
 </template>
 
@@ -13,7 +14,7 @@
         name: "Details",
       data(){
           return {
-           
+           success:false
           }
       },
       mounted: function(){
@@ -22,7 +23,13 @@
         })
       },
       methods:{
-
+        add: function(){
+          this.success = true;
+          let _this = this;
+          setTimeout(function(){
+            _this.success = false;
+          },2000)
+        }
       }
     }
 </script>
@@ -58,5 +65,13 @@
       background-color: rgb(26,26,26);
       color:white;
       font-size:1.2rem;
+   }
+   .popMessage{
+    font-size:1.4rem;
+    padding:1rem 2rem;
+    background-color: lightgray;
+    position:fixed;
+    top:40%;
+    left:30%;
    }
 </style>

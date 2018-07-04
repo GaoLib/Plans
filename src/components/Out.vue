@@ -9,7 +9,7 @@
         <p class="end">{{item.endtime}}</p></router-link>
       </div>
       <div class="activity add">
-        <router-link to="/add"><img src="../../static/images/add.png"></router-link>
+        <router-link to="/add/outA"><img src="../../static/images/add.png"></router-link>
       </div>
     </div>
   </div>
