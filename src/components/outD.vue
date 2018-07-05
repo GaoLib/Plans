@@ -3,13 +3,14 @@
     <img :src="'../../'+outList.Image+'.jpg'">
     <div class="name">
       <h2>{{outList.title}}</h2>
-      <p>{{outList.Address}}</p>
-      <p class="description">{{outList.description}}</p>
+      <input type="text" class="address" v-model="outList.Address" :disabled="editStatus === 'false'">
+      <textarea class="description" v-model="outList.description" :disabled="editStatus === 'false'"></textarea>
     </div>
   </div>
 </template>
 
 <script>
+  import {mapActions,mapGetters} from 'vuex'
     export default {
         name: "foodD",
       data(){
@@ -22,6 +23,9 @@
           this.getAddressList();
            // console.log(this.$route.params.id);
         })
+      },
+       computed:{
+        ...mapGetters(['editStatus'])
       },
       methods:{
         getAddressList: function(){
@@ -60,15 +64,24 @@
      padding-bottom:1rem;
      border-bottom:1px solid rgba(86,110,74,0.6);
 
-     p{
-      margin-top:2.4rem;
+     .address{
+      // margin-top:2.4rem;
+      padding:0.4rem 0;
       font-size:0.8rem;
+      width:90%;
+      text-align:center;
+      border:none;
+      background-color: white;
      }
      .description{
       margin-top:2rem;
       margin-bottom:2rem;
       font-size:1rem;
       padding:0 0.2rem;
+      width:90%;
+      height:18rem;
+      border:none;
+      background-color: white;
      }
    }
 }

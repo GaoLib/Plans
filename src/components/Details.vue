@@ -1,20 +1,30 @@
 <template>
   <div>
     <div class="header">
-      <img class="back" src="../../static/images/back.png" v-on:click="$router.back(-1)">
+      <img class="back" src="../../static/images/back.png" v-on:click="back">
       <img v-bind:src="done === 'true' ? '../../static/images/trip/doneActive.png' : '../../static/images/trip/done.png'" v-on:click="haveDone" class="done">
     </div>
     <div class="details"><router-view/></div>
-    <div class="edit"><icon name="edit" scale="3" class="editIcon"></icon></div>
+    <div class="backContainer" v-if="backFlag">
+      <div class="backConfirm">
+        <h3>Save changes?</h3>
+        <button @click="confirmed">Yes</button><button @click="confirmed">No</button>
+      </div>
+    </div>
+    <div class="edit" @click="editDetails('true')" v-if="editStatus === 'false'"><img src="../../static/images/trip/edit.png" class="editIcon"></div>
+    <div class="edit" @click="save('false')" v-if="editStatus === 'true'"><img src="../../static/images/trip/save.png" class="editIcon"></div>
   </div>
 </template>
 
 <script>
+  import {mapActions,mapGetters} from 'vuex'
     export default {
         name: "Details",
       data(){
           return {
-            done:''
+            done:'',
+            path:'',
+            backFlag:false
           }
       },
       mounted: function(){
@@ -23,11 +33,14 @@
           // console.log(this.$route);
         })
       },
+      computed:{
+        ...mapGetters(['editStatus'])
+      },
       methods:{
         getAddressList: function(){
           let _this = this;
-          let path = this.$route.fullPath.split('/')[2];
-          this.$http.get('../../static/data/'+path+'.json').then((res)=>{
+          this.path = this.$route.fullPath.split('/')[2];
+          this.$http.get('../../static/data/'+this.path+'.json').then((res)=>{
             let lists = res.body.result.list;
             lists.forEach(function(curlist){
               if(curlist.Id == _this.$route.params.id){
@@ -39,6 +52,19 @@
         },
         haveDone: function(){
           this.done = !this.done;
+        },
+        ...mapActions(['editDetails']),
+        ...mapActions(['save']),
+        back: function(){
+          if(this.editStatus === 'true'){
+            this.backFlag = true;
+          }else{
+             this.$router.back(-1);
+          }
+        },
+        confirmed: function(){
+          this.save('false');
+          this.$router.back(-1);
         }
       }
     }
@@ -81,6 +107,30 @@
 
       .editIcon{
         margin-top:1rem;
+      }
+    }
+    .backContainer{
+      position:fixed;
+      width:100%;
+      height:100%;
+      top:0;
+      left:0;
+      background-color: rgba(26,26,26,0.6);
+      z-index:111;
+      .backConfirm{
+        position:fixed;
+        width:60%;
+        height:8rem;
+        top:40%;
+        left:18%;
+        background-color: white;
+        text-align:center;
+
+        button{
+          border:none;
+          margin:1rem;
+          background-color: #91AE81; 
+        }
       }
     }
 </style>

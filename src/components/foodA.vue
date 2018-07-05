@@ -56,9 +56,9 @@
           this.image = ev.target.files[0].name;
         },
         more: function(){
-          this.indexR ++;
-          let key = 'Food'+ this.indexR; 
+          let key = 'Food'+ (this.indexR+1); 
           Vue.set(this.foods,key,'');
+          this.indexR ++;
           // console.log(this.indexR,this.foods);
         },
         deleteDay: function(key){
