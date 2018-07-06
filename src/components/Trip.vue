@@ -6,11 +6,16 @@
       <img v-bind:src="'../../static/images/trip/'+rollList[(rollList.indexOf(curGallery)+1+rollList.length) % rollList.length]+'.png'" class="rightGallery">
     </div>
     <div class="trips">
-      <div class="trip" v-for="(item,index) in tripList" v-bind:style="{backgroundImage:'url(\''+item.tripImage+'.jpg\')'}">
-          <router-link :to="'/Details/tripD/'+item.Id"><h2 v-text="item.tripDestination"></h2>
-          <p v-text="item.tripPrice"></p></router-link>
-      </div>
-      <div class="trip add">
+      <div v-for="(item,index) in tripList">
+        <div :class="['trip',{'tripDisable':curDeleteNum+1 === index}]" v-bind:style="{backgroundImage:'url(\''+item.tripImage+'.jpg\')'}" @touchstart="_deleteStart(index)" @touchend="_deleteEnd">
+            <router-link :to="'/Details/tripD/'+item.Id"><h2 v-text="item.tripDestination"></h2>
+            <p v-text="item.tripPrice"></p></router-link>
+        </div>
+        <div class="trip disable" v-if="curDeleteNum === index" @click="cancel">
+          <div class="iconContainer"><img src="../../static/images/delete.png" @click="deleted"></div>
+        </div>
+     </div>
+      <div :class="['trip','add',{'addDisable':curDeleteNum === tripList.length - 1}]">
         <router-link to="/add/tripA"><img src="../../static/images/add.png"></router-link>
       </div>
     </div>
@@ -18,7 +23,7 @@
 </template>
 
 <script>
-
+import Vue from 'vue'
 export default {
   name: 'HelloWorld',
   data () {
@@ -26,7 +31,9 @@ export default {
       tripList:[],
       startX:'',
       rollList:['chongqing','huangshan','xiamen'],
-      curGallery:'huangshan'
+      curGallery:'huangshan',
+      timeOutEvent: 0,
+      curDeleteNum:''
     }
   },
   mounted:function(){
@@ -64,6 +71,23 @@ export default {
           // console.log('just click');
         }
       }
+    },
+    _deleteStart: function(index){
+      let _this = this;
+      this.timeOutEvent = setTimeout(function(){
+         _this.curDeleteNum = index;
+      },500)
+    },
+    _deleteEnd: function(){
+      clearTimeout(this.timeOutEvent);
+    },
+    cancel: function(){
+      this.curDeleteNum = '';
+    },
+    deleted: function(ev){
+      ev.stopPropagation();
+      Vue.delete(this.tripList,this.curDeleteNum);
+      this.curDeleteNum = '';
     }
   }
 }
@@ -178,13 +202,14 @@ export default {
     width: 96%;
     margin-top:0.5rem;
     margin-left: 2%;
+    overflow:hidden;
 
     .trip{
       width:94%;
       height:9rem;
       background-repeat: no-repeat;
       background-size: cover;
-      margin:1.2rem 0.6rem;
+      margin:1rem 0.6rem;
       text-align:center;
       overflow:hidden;
  
@@ -196,6 +221,27 @@ export default {
         color:white;
       }
     }
+    .tripDisable{
+      margin-top:-10rem;
+    }
+    .disable{
+      background-color: rgba(128,128,128,0.6);
+      position:relative;
+      top:-10rem;
+      left:0;
+
+      .iconContainer{
+        background-color: red;
+        margin:2.6rem auto;
+        width:4rem;
+        height:4rem;
+        border-radius:50%;
+
+        img{
+          margin-top:1rem;
+        }
+      }
+    }
     .add{
       background-color: #546B48; 
       height:6rem;
@@ -204,8 +250,9 @@ export default {
         margin-top:2rem;
       }
     }
+    .addDisable{
+      margin-top:-10rem;
+    }
   }
-
-
 
 </style>

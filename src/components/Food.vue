@@ -4,11 +4,16 @@
       <img v-for="type in typeList" :src="curFoodType === type ? '../../static/images/food/' + type + 'Active.png' : '../../static/images/food/' + type + '.png' " class="type" @click="foodType(type)">
     </div>
     <div class="foods">
-    <div class="food" v-for="(item,index) in filterList" v-bind:style="{backgroundImage:'url(\''+item.foodImage+'.jpg\')'}">
-         <router-link :to="'/Details/foodD/'+item.Id"><h2 v-text="item.foodDestination"></h2>
-          <p v-text="item.foodPrice"></p></router-link>
-    </div>
-    <div class="food add">
+      <div v-for="(item,index) in filterList">
+        <div :class="['food',{'foodDisable':curDeleteNum+1 === index}]"  v-bind:style="{backgroundImage:'url(\''+item.foodImage+'.jpg\')'}" @touchstart="_deleteStart(index)" @touchend="_deleteEnd">
+             <router-link :to="'/Details/foodD/'+item.Id"><h2 v-text="item.foodDestination"></h2>
+              <p v-text="item.foodPrice"></p></router-link>
+        </div>
+         <div class="food disable" v-if="curDeleteNum === index" @click="cancel">
+          <div class="iconContainer"><img src="../../static/images/delete.png" @click="deleted"></div>
+        </div>
+      </div>
+    <div :class="['food','add',{'addDisable':curDeleteNum === foodList.length - 1}]">
       <router-link to="/add/foodA"><img src="../../static/images/add.png"></router-link>
     </div>
   </div>
@@ -16,6 +21,7 @@
 </template>
 
 <script>
+  import Vue from 'vue'
     export default {
       name: "Food",
       data(){
@@ -23,7 +29,8 @@
             foodList:[],
             curFoodType:'',
             typeList:['hotpot','cake','drink','noodle','bar','seafood','westernfood','icecream'],
-            filterList:[]
+            filterList:[],
+            curDeleteNum:''
           }
         },
       computed:{
@@ -60,8 +67,24 @@
             }else{
               this.curFoodType = '';
               this.filterList = this.foodList;
-            }
-            
+            }    
+          },
+           _deleteStart: function(index){
+              let _this = this;
+              this.timeOutEvent = setTimeout(function(){
+                 _this.curDeleteNum = index;
+              },500)
+            },
+          _deleteEnd: function(){
+              clearTimeout(this.timeOutEvent);
+            },
+          cancel: function(){
+            this.curDeleteNum = '';
+          },
+          deleted: function(ev){
+            ev.stopPropagation();
+            Vue.delete(this.foodList,this.curDeleteNum);
+            this.curDeleteNum = '';
           }
       }
     }
@@ -100,6 +123,29 @@
       color:white;
     }
   }
+  .foodDisable{
+      margin-top:-10rem;
+    }
+
+  .disable{
+      background-color: rgba(128,128,128,0.6);
+      position:relative;
+      top:-10rem;
+      left:0;
+
+      .iconContainer{
+        background-color: red;
+        margin:2.6rem auto;
+        width:4rem;
+        height:4rem;
+        border-radius:50%;
+
+        img{
+          margin-top:1rem;
+        }
+      }
+    }
+
   .add{
     background-color: #546B48; 
     height:6rem;
@@ -108,4 +154,7 @@
        margin-top:2rem;
     }
   }
+   .addDisable{
+      margin-top:-10rem;
+    }
 </style>
