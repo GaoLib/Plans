@@ -2,14 +2,14 @@
 	<div>
 		<div class="types">
 			<img v-for="type in typeList" 
-			:src="curFoodType === type ? '../assets/images/food/' + type + 'Active.png' : '../assets/images/food/' + type + '.png' " 
+			:src="curFoodType === type ? require('@/assets/images/food/' + type + 'Active.png') : require('@/assets/images/food/' + type + '.png') " 
 			class="type" 
 			@click="foodType(type)"
 			:key="type">
 			</div>
 			<div class="foods">
 			<div v-for="(item,index) in filterList" :key="item.Id">
-				<div :class="['food',{'foodDisable':curDeleteNum+1 === index}]"  v-bind:style="{backgroundImage:'url(\''+item.foodImage+'.jpg\')'}" @touchstart="deleteStart(index)" @touchend="deleteEnd">
+				<div :class="['food',{'foodDisable':curDeleteNum+1 === index}]" :style="{backgroundImage: 'url('+ require('@/'+item.foodImage+'.jpg')+')'}" @touchstart="deleteStart(index)" @touchend="deleteEnd">
 					<router-link :to="'/Details/foodD/'+item.Id"><h2 v-text="item.foodDestination"></h2>
 					<p v-text="item.foodPrice"></p></router-link>
 				</div>
@@ -26,6 +26,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { getFoodList } from '@/api/food'
 
 @Component
 export default class Food extends Vue {
@@ -34,19 +35,22 @@ export default class Food extends Vue {
 	typeList: string[] = ['hotpot','cake','drink','noodle','bar','seafood','westernfood','icecream']
 	filterList: any[] = []
 	curDeleteNum: number | string = ''
-	timeOutEvent: number = 0
+	timeOutEvent: any 
+	bgImg: any = {
+		backgroundImage: `url(${require('@/assets/images/trip/tm-img-11.jpg')})`
+	}
 
 	mounted(){
-		this.$nextTick(function(){
-			// this.getData();
+		this.$nextTick(() => {
+			this.getData();
 		})
 	}
 
 	getData(){
-		let _this=this;
-		this.$http.get('../../static/data/foodD.json').then((res)=>{
-			_this.foodList = res.body.result.list;
-			_this.filterList = res.body.result.list;
+		getFoodList().then((res: any)=>{
+			this.foodList = res.data
+			this.filterList = res.data
+			console.log(this.filterList)
 		})
 	}
 	
@@ -62,7 +66,7 @@ export default class Food extends Vue {
 		}    
 	}
 
-	deleteStart(index){
+	deleteStart(index: number){
 		let _this = this;
 		this.timeOutEvent = setTimeout(function(){
 			_this.curDeleteNum = index;
@@ -109,6 +113,7 @@ export default class Food extends Vue {
     margin:1.2rem 0.6rem;
     text-align:center;
     overflow:hidden;
+	// background: url('../assets/images/trip/tm-img-11.jpg');
 
     h2{
       margin-top:2.4rem;

@@ -12,6 +12,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Getter, Action } from 'vuex-class'
+import { getOutList } from '@/api/out'
 
 @Component
 export default class Add extends Vue {
@@ -21,13 +22,13 @@ export default class Add extends Vue {
     
     mounted(){
         this.$nextTick(() => {
-            // this.getAddressList();
+            this.getAddressList();
         })
     }
 
     getAddressList(){
-        this.$http.get('../../static/data/outD.json').then((res)=>{
-            let lists = res.body.result.list;
+        getOutList().then((res: any)=>{
+            let lists = res.data;
             lists.forEach((curlist:any) => {
                 if(curlist.Id == this.$route.params.id){
                     this.outList = curlist;

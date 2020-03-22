@@ -24,6 +24,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { getTripList } from '@/api/trip'
 
 @Component
 export default class Trip extends Vue {
@@ -36,13 +37,13 @@ export default class Trip extends Vue {
 
     mounted(){
         this.$nextTick(() => {
-            // this.getData();
+            this.getData();
         })
     }
 
     getData(){
-        this.$http.get('../../static/data/tripD.json').then((res)=>{
-            this.tripList = res.body.result.list;
+        getTripList().then((res: any)=>{
+            this.tripList = res.data
         });
     }
 

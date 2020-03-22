@@ -22,6 +22,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Getter, Action } from 'vuex-class'
+import { getFoodList } from '@/api/food'
 
 @Component
 export default class FoodDetail extends Vue {
@@ -33,13 +34,13 @@ export default class FoodDetail extends Vue {
 
     mounted(){
         this.$nextTick(() => {
-            // this.getAddressList();
+            this.getAddressList();
         })
     }
 
     getAddressList(){
-        this.$http.get('../../static/data/foodD.json').then((res)=>{
-        let lists = res.body.result.list;
+        getFoodList().then((res: any)=>{
+        let lists = res.data;
         lists.forEach((curlist: any) => {
             if(curlist.Id == this.$route.params.id){
                 this.foodList = curlist;
