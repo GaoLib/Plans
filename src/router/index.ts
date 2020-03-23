@@ -23,9 +23,9 @@ const routes = [
 		// which is lazy-loaded when the route is visited.
 		component: () => import('@/components/Details.vue'),
 		children:[
-			{ path: 'tripD/:id', component: () => import('@/components/TripDetail.vue')},
-			{ path: 'foodD/:id', component: () => import('@/components/FoodDetail.vue')},
-			{ path: 'outD/:id', component: () => import('@/components/OutDetail.vue')}
+			{ path: 'trip/:id', component: () => import('@/components/TripDetail.vue')},
+			{ path: 'food/:id', component: () => import('@/components/FoodDetail.vue')},
+			{ path: 'out/:id', component: () => import('@/components/OutDetail.vue')}
 		]
 	},
 	{
