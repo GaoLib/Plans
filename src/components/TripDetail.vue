@@ -1,29 +1,32 @@
 <template>
 	<div class="plan">
-        <img v-bind:src="'../../'+planList.tripImage+'.jpg'" />
-        <h1 v-html="planList.tripDestination"></h1>
-        <textarea placeholder="Description Here" class="description" v-html="planList.tripDescription" :disabled="editStatus === 'false'"></textarea>
+        <img :src="require('@/assets/images/trip/'+curTrip.image+'.jpg')" />
+        <h1>{{curTrip.destination}}</h1>
+        <textarea placeholder="Description Here" class="description" v-html="curTrip.description" :disabled="!editStatus"></textarea>
         <div class="route">
-        <div class="day" v-for="(value, key, index) in planList.route" :key="value">
+        <div class="day" v-for="(value, key, index) in curTrip.route" :key="value">
             <div class="key">
             <span>{{key}}</span>
-            <span class="delete" v-if="count === index+1 && editStatus === 'true'" @click="del(index)">Delete</span>
+            <span class="delete" v-if="count === index+1 && editStatus" @click="del(index)">Delete</span>
             </div>
-            <textarea v-model="planList.route[key]" class="value" :disabled="editStatus === 'false'"></textarea>
+            <textarea v-model="curTrip.route[key]" class="value" :disabled="!editStatus"></textarea>
         </div>
         </div>
-        <button class="morebtn" v-if="editStatus === 'true'" @click="more">One More Day</button>
+        <button class="morebtn" v-if="editStatus" @click="more">One More Day</button>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Getter } from 'vuex-class'
 import { getTripList } from '@/api/trip'
 
 @Component
 export default class Add extends Vue {
-	planList: any = null
+	curTrip: any = null
     count: number = 0
+
+    @Getter editStatus;
 
     mounted(){
         this.$nextTick(() => {
@@ -33,27 +36,22 @@ export default class Add extends Vue {
 
     getAddressList(){
         getTripList().then((res: any)=>{
-            let lists = res.data;
-            lists.forEach((curlist: any) => {
-                if(curlist.Id == this.$route.params.id){
-                    this.planList = curlist;
-                    for(let key in curlist.route){
-                        this.count ++;
-                    }
-                }
-            })
+            this.curTrip = res.data.find((item: any) => item.id == this.$route.params.id)
+            for(let key in this.curTrip.route){
+                this.count ++;
+            }
         })
     }
 
     more(){
         let key = 'Day'+(this.count+1);
-        Vue.set(this.planList.route,key,'');
+        Vue.set(this.curTrip.route,key,'');
         this.count ++;
     }
 
     del(index: number){
         let value = 'Day' + (index + 1);
-        Vue.delete(this.planList.route,value);
+        Vue.delete(this.curTrip.route,value);
         this.count --;
     }
 }

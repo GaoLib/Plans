@@ -68,20 +68,20 @@
         }
 
         touchStart(ev: any) {
-            ev = ev || event; //浏览器兼容问题，有的ev，有的用event
-            if (ev.touches.length == 1) {
-                this.startX = ev.touches[0].clientX;
+            let eve = ev || event; //浏览器兼容问题，有的ev，有的用event
+            if (eve.touches.length == 1) {
+                this.startX = eve.touches[0].clientX;
             }
         }
 
         touchEnd(ev: any) {
-            ev = ev || event;
+            let eve = ev || event;
             let index = this.rollList.indexOf(this.curGallery);
             let length = this.rollList.length;
-            if (ev.changedTouches.length == 1) {
-                if (ev.changedTouches[0].clientX > this.startX) {
+            if (eve.changedTouches.length == 1) {
+                if (eve.changedTouches[0].clientX > this.startX) {
                     this.curGallery = this.rollList[(index - 1 + length) % length];
-                } else if (ev.changedTouches[0].clientX < this.startX) {
+                } else if (eve.changedTouches[0].clientX < this.startX) {
                     this.curGallery = this.rollList[(index + 1 + length) % length];
                 }
             }

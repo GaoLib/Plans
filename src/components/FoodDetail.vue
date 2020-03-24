@@ -1,72 +1,60 @@
 <template>
 	<div class="plan">
-        <img v-bind:src="'../../'+foodList.foodImage+'.jpg'" />
-        <h1 v-html="foodList.foodDestination"></h1>
+        <img :src="require('@/assets/images/trip/'+curFood.image+'.jpg')" />
+        <h1>{{curFood.destination}}</h1>
         <div class="addressContent">
             <icon name="position" class="position" scale="3"></icon>
-            <textarea placeholder="Address Here" :disabled="editStatus === 'false'" class="address" v-html="foodList.foodAddress"></textarea>
+            <textarea placeholder="Address Here" :disabled="!editStatus" class="address" :value="curFood.address"></textarea>
         </div>
         <div class="route">
-        <div class="day" v-for="(value, key, index) in foodList.foods" :key="value">
+        <div class="day" v-for="(recom, index) in curFood.recommands" :key="recom">
             <div class="key">
-            <input type="text" v-model="titles[index]" :disabled="editStatus === 'false'" class="text" @change="titleChange(key,index)">
-            <span class="delete" v-if="count === index+1 && editStatus === 'true'" @click="del(key)">Delete</span>
+                <input type="text" v-model="titles[index]" :disabled="!editStatus" class="text" @blur="titleChange(index)">
+                <span class="delete" v-if="count === index+1 && editStatus" @click="del(index)">Delete</span>
             </div>
-            <textarea v-model="foodList.foods[key]" class="value" :disabled="editStatus === 'false'"></textarea>
+            <textarea v-model="curFood.reasons[index]" class="value" :disabled="!editStatus"></textarea>
         </div>
         </div>
-        <button class="morebtn" v-if="editStatus === 'true'" @click="more">One More Food</button>
+        <button class="morebtn" v-if="editStatus" @click="more">One More Food</button>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Getter, Action } from 'vuex-class'
+import { Getter } from 'vuex-class'
 import { getFoodList } from '@/api/food'
 
 @Component
 export default class FoodDetail extends Vue {
-    foodList: any = null
+    curFood: any = null
     count: number = 0
     titles: string[] = []
 
-    @Getter editState;
+    @Getter editStatus;
 
     mounted(){
-        this.$nextTick(() => {
-            this.getAddressList();
-        })
+         this.getAddressList();
     }
 
     getAddressList(){
         getFoodList().then((res: any)=>{
-        let lists = res.data;
-        lists.forEach((curlist: any) => {
-            if(curlist.Id == this.$route.params.id){
-                this.foodList = curlist;
-                for(let key in curlist.foods){
-                    this.count ++;
-                    this.titles.push(key);
-                }
-            }
-        })
+            this.curFood = res.data.find((item: any) => item.id == this.$route.params.id)
+            this.titles = this.curFood.recommands
         })
     }
         
-    titleChange(key,index){
-        let value = this.foodList.foods[key];
-        Vue.delete(this.foodList.foods,key);
-        Vue.set(this.foodList.foods,this.titles[index],value);
+    titleChange(key: string,index: number){
+        this.curFood.recommands.splice(index, 1, this.titles[index])
     }
 
     more(){
         let key = 'Food'+ (this.count+1); 
-        Vue.set(this.foodList.foods,key,'');
-        this.count++;
+        this.curFood.recommands.push(key)
+        this.count++
     }
 
-    del(key){
-        Vue.delete(this.foodList.foods,key);
+    del(index: number){
+        this.curFood.splice(index,1)
     }
 }
 </script>

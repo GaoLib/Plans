@@ -1,39 +1,32 @@
 <template>
 	<div class="outD">
-        <img :src="'../../'+outList.Image+'.jpg'">
+        <img :src="require('@/assets/images/trip/'+curOut.image+'.jpg')">
         <div class="name">
-            <h2>{{outList.title}}</h2>
-            <input type="text" class="address" v-model="outList.Address" :disabled="editStatus === 'false'">
-            <textarea class="description" v-model="outList.description" :disabled="editStatus === 'false'"></textarea>
+            <h2>{{curOut.title}}</h2>
+            <input type="text" class="address" v-model="curOut.address" :disabled="!editStatus">
+            <textarea class="description" v-model="curOut.description" :disabled="!editStatus"></textarea>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Getter, Action } from 'vuex-class'
+import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Getter } from 'vuex-class'
 import { getOutList } from '@/api/out'
 
 @Component
 export default class Add extends Vue {
-    outList: any[] = []
+    curOut: any = null
 
     @Getter editStatus;
     
     mounted(){
-        this.$nextTick(() => {
-            this.getAddressList();
-        })
+        this.getAddressList();
     }
 
     getAddressList(){
         getOutList().then((res: any)=>{
-            let lists = res.data;
-            lists.forEach((curlist:any) => {
-                if(curlist.Id == this.$route.params.id){
-                    this.outList = curlist;
-                }
-            })
+            this.curOut = res.data.find((item: any) => item.id == this.$route.params.id)
         })
     }
 }

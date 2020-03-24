@@ -2,15 +2,15 @@
     <div>
         <div class="titleText">Activities</div>
         <div class="activities">
-            <div v-for="(item,index) in actList" :key="item.id">
+            <div v-for="(item,index) in actList" :key="item.title">
                 <div :class="['activity',{'activityRightDisable': deleteFlag && curDeleteNum % 2 === 1 && curDeleteNum < index},{'activityLeftDisable1':deleteFlag && curDeleteNum % 2 === 0 && index % 2 === 1 && index > curDeleteNum},{'activityLeftDisable2':deleteFlag && curDeleteNum % 2 === 0 && index % 2 === 0 && index > curDeleteNum}]"
                     @touchstart="deleteStart(index)" @touchend="deleteEnd">
-                    <router-link :to="'/details/out/'+item.id">
+                    <div @click="turnPage(item.id)">
                         <div class="type">{{item.type}}</div>
-                        <img :src="require('@/assets/images/trip/'+ item.image +'.jpg')" class="img">
+                        <img :src="require('../assets/images/trip/'+item.image+'.jpg')" class="img">
                         <h4 class="title">{{item.title}}</h4>
                         <p class="end">{{item.endtime}}</p>
-                    </router-link>
+                    </div>
                 </div>
                 <div :class="['activity', {'leftdisable': curDeleteNum % 2 === 0},{'rightdisable':curDeleteNum % 2 == 1}]"
                     v-if="curDeleteNum === index" @click="cancel">
@@ -36,9 +36,18 @@
     @Component
     export default class Add extends Vue {
         actList: any[] = []
-        curDeleteNum: number| null = null
+        curDeleteNum: number | null = null
         deleteFlag: boolean = false
-        timeOutEvent: any = null
+        timeOutEvent: any = 0
+
+        get img(): object {
+			return function (src: string) {
+				let imgString = require(`../assets/images/trip/${src}.jpg`)
+				return {
+					'background-image': `url(${imgString})`
+				}
+			}
+		}
 
         mounted() {
             this.getData();
@@ -47,11 +56,14 @@
         getData() {
             getOutList().then((res: any) => {
                 this.actList = res.data;
-                console.log(this.actList);
-                this.actList.forEach((act: any) => {
-                    act.endtime = act.endtime ? act.endtime + ' 结束' : '----------';
-                })
-                
+                for (let index in this.actList) {
+                    if (this.actList[index].endtime) {
+                        this.actList[index].endtime += ' 结束';
+                    } else {
+                        this.actList[index].endtime = '----------';
+                    }
+                }
+                // console.log(_this.actList);
             })
         }
 
@@ -78,6 +90,10 @@
             this.deleteFlag = false;
             this.curDeleteNum = 0;
         }
+
+        turnPage(id: number) {
+			this.$router.push('/details/out/'+ id);
+		}
     }
 </script>
 

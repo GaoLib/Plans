@@ -1,8 +1,8 @@
 <template>
 	<div>
         <div class="header">
-            <img class="back" src="../assets/images/back.png" v-on:click="back">
-            <img v-bind:src="done ? '../assets/images/trip/doneActive.png' : '../assets/images/trip/done.png'" v-on:click="haveDone" class="done">
+            <img class="back" src="../assets/images/back.png" @click="back">
+            <img :src="done ? require('@/assets/images/trip/doneActive.png') : require('@/assets/images/trip/done.png')" @click="haveDone" class="done">
         </div>
         <div class="details"><router-view/></div>
         <div class="backContainer" v-if="backFlag">
@@ -11,14 +11,17 @@
             <button @click="confirmed">Yes</button><button @click="confirmed">No</button>
         </div>
         </div>
-        <div class="edit" @click="editDetails('true')" v-if="editStatus === 'false'"><img src="../assets/images/trip/edit.png" class="editIcon"></div>
-        <div class="edit" @click="save('false')" v-if="editStatus === 'true'"><img src="../assets/images/trip/save.png" class="editIcon"></div>
+        <div class="edit" @click="edit_detail(true)" v-if="!editStatus"><img src="../assets/images/trip/edit.png" class="editIcon"></div>
+        <div class="edit" @click="save(false)" v-if="editStatus"><img src="../assets/images/trip/save.png" class="editIcon"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Getter, Action } from 'vuex-class'
+import { getFoodList } from '@/api/food'
+import { getOutList } from '@/api/out'
+import { getTripList } from '@/api/trip'
 
 @Component
 export default class Details extends Vue {
@@ -28,24 +31,33 @@ export default class Details extends Vue {
 
     @Getter editStatus;
 
-    @Action SAVE;
+    @Action save;
+
+    @Action edit_detail;
     
     mounted(){
-        this.$nextTick(function(){
-            this.getAddressList();
-        })
+        this.getAddressList();
     }
 
     getAddressList(){
         this.path = this.$route.fullPath.split('/')[2];
-        this.$http.get('../../static/data/'+this.path+'.json').then((res)=>{
-        let lists = res.body.result.list;
-        lists.forEach((curlist: any) => {
-            if(curlist.Id == this.$route.params.id){
-                this.done = curlist.done;
-            }
-        })
-        })
+        switch (this.path){
+            case 'food':
+                getFoodList().then((res: any) => {
+                    this.done = res.data.find((item: any) => {item.id == this.$route.params.id}).done
+                })
+                break;
+            case 'trip':
+                getTripList().then((res: any) => {
+                    this.done = res.data.find((item: any) => {item.id == this.$route.params.id}).done
+                })
+                break;
+            case 'out':
+                getOutList().then((res: any) => {
+                    this.done = res.data.find((item: any) => {item.id == this.$route.params.id}).done
+                })
+        }
+
     }
 
     haveDone(){
@@ -60,7 +72,7 @@ export default class Details extends Vue {
         }
     }
     confirmed(){
-        this.SAVE('false');
+        this.save(false);
         this.$router.back();
     }
 
@@ -80,6 +92,7 @@ export default class Details extends Vue {
     .back{
         margin-top:0.6rem;
         margin-left:4%;
+        float: left;
     }
     .done{
         float:right;

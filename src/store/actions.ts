@@ -2,11 +2,11 @@ import { ActionTree } from 'vuex'
 import { RootStateTypes } from './types'
 
 const actions: ActionTree<RootStateTypes, any> = {
-	EDIT_DETAILS({ commit }, name: string) {
-	  	commit('Edit_Details', name);
+	edit_detail({ commit }, name: boolean) {
+	  	commit('EDIT_DETAILS', name);
 	},
-	save({commit}, name: string) {
-		commit('Save',name)
+	save({commit}, name: boolean) {
+		commit('SAVE',name)
 	}
 }
 
