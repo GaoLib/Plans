@@ -1,4 +1,10 @@
-{
+{   
+	"defaultSeverity": "warning",
+	"linterOptions": {
+		"exclude": [
+			"node_modules/**"
+		]
+	},
     "rulesDirectory": [],
     "rules": {
 		"adjacent-overload-signatures": false, 
@@ -27,18 +33,6 @@
 		"typedef-whitespace": true, 
 		"unified-signatures": true, 
 		"await-promise": false, 
-		"ban": [
-				true,
-				"eval",
-				{"name": "$", "message": "please don't"},
-				["describe", "only"],
-				{"name": ["it", "only"], "message": "don't focus tests"},
-				{
-				"name": ["chai", "assert", "equal"],
-				"message": "Use 'strictEqual' instead."
-				},
-				{"name": ["*", "forEach"], "message": "Use a regular for loop instead."}
-		],
 		"curly": true, 
 		"forin":true, 
 		"import-blacklist":true, 
@@ -54,6 +48,11 @@
 		"no-for-in-array": false, 
 		"no-implicit-dependencies": false, 
 		"no-inferred-empty-object-type": false, 
+		"no-inferrable-types": [
+			true,
+			"ignore-params",
+			"ignore-properties"
+		],
 		"no-invalid-template-strings":  true, 
 		"no-invalid-this": true, 
 		"no-misused-new": true, 

@@ -9,16 +9,16 @@
                 class="rightGallery">
         </div>
         <div class="trips">
-            <div v-for="(item,index) in tripList" :key="item.id">
-                <div :class="['trip',{'tripDisable':curDeleteNum+1 === index}]"
-                    :style="img(item.image)" @touchstart="deleteStart(index)"
+            <div v-for="item in tripList" :key="item.id">
+                <div :class="['trip',{'tripDisable': item.id > 1 && curDeleteNum+1 === item.id}]"
+                    :style="img(item.image)" @touchstart="deleteStart(item.id)"
                     @touchend="deleteEnd">
                     <div @click="turnPage(item.id)">
                         <h2>{{item.destination}}</h2>
                         <p>{{item.price}}</p>
                     </div>
                 </div>
-                <div class="trip disable" v-if="curDeleteNum === index" @click="cancel">
+                <div class="trip disable" v-if="curDeleteNum === item.id" @click="cancel">
                     <div class="iconContainer"><img src="../assets/images/delete.png" @click="deleted"></div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
         rollList: string[] = ['chongqing', 'huangshan', 'xiamen']
         curGallery: string = 'huangshan'
         timeOutEvent: any = 0
-        curDeleteNum: number| string = ''
+        curDeleteNum: number = 0
 
         get img(): object {
 			return function (src: string) {
@@ -87,10 +87,10 @@
             }
         }
 
-        deleteStart(index: number) {
+        deleteStart(id: number) {
             let _this = this;
             this.timeOutEvent = setTimeout(function () {
-                _this.curDeleteNum = index;
+                _this.curDeleteNum = id;
             }, 500)
         }
 

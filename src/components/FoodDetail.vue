@@ -21,7 +21,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Getter } from 'vuex-class'
 import { getFoodList } from '@/api/food'
 
 @Component
@@ -30,7 +29,9 @@ export default class FoodDetail extends Vue {
     count: number = 0
     titles: string[] = []
 
-    @Getter editStatus;
+    get editStatus(){
+        return this.$store.getters.editStatus
+    }
 
     mounted(){
          this.getAddressList();

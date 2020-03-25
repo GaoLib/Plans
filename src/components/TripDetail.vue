@@ -17,8 +17,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { Getter } from 'vuex-class'
+import { Component, Vue } from 'vue-property-decorator'
 import { getTripList } from '@/api/trip'
 
 @Component
@@ -26,20 +25,18 @@ export default class Add extends Vue {
 	curTrip: any = null
     count: number = 0
 
-    @Getter editStatus;
+    get editStatus() {
+        return this.$store.getters.editStatus
+    }
 
     mounted(){
-        this.$nextTick(() => {
-            this.getAddressList();
-        })
+        this.getAddressList()
     }
 
     getAddressList(){
         getTripList().then((res: any)=>{
             this.curTrip = res.data.find((item: any) => item.id == this.$route.params.id)
-            for(let key in this.curTrip.route){
-                this.count ++;
-            }
+            this.count = Object.keys(this.curTrip.route).length
         })
     }
 

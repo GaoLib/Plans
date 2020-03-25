@@ -6,15 +6,15 @@
 				class="type" @click="foodType(type)" :key="type">
 		</div>
 		<div class="foods">
-			<div v-for="(item,index) in filterList" :key="item.id">
-				<div :class="['food',{'foodDisable':curDeleteNum+1 === index}]" :style="img(item.image)"
-					@touchstart="deleteStart(index)" @touchend="deleteEnd">
+			<div v-for="item in filterList" :key="item.id">
+				<div :class="['food',{'foodDisable':curDeleteNum+1 === item.id}]" :style="img(item.image)"
+					@touchstart="deleteStart(item.id)" @touchend="deleteEnd">
 					<div @click="turnPage(item.id)">
 						<h2>{{item.destination}}</h2>
 						<p>{{item.price}}</p>
 					</div>
 				</div>
-				<div class="food disable" v-if="curDeleteNum === index" @click="cancel">
+				<div class="food disable" v-if="curDeleteNum === item.id" @click="cancel">
 					<div class="iconContainer"><img src="../assets/images/delete.png" @click="deleted"></div>
 				</div>
 			</div>
@@ -28,7 +28,6 @@
 <script lang="ts">
 	import {
 		Component,
-		Prop,
 		Vue
 	} from 'vue-property-decorator';
 	import {
@@ -41,7 +40,7 @@
 		curFoodType: string = ''
 		typeList: string[] = ['hotpot', 'cake', 'drink', 'noodle', 'bar', 'seafood', 'westernfood', 'icecream']
 		filterList: any[] = []
-		curDeleteNum: number | string = ''
+		curDeleteNum: number = 0
 		timeOutEvent: any
 		bgImg: any = {
 			backgroundImage: `url(${require('@/assets/images/trip/tm-img-11.jpg')})`
@@ -49,7 +48,7 @@
 
 		get img(): object {
 			return function (src: string) {
-				let imgString = require(`../assets/images/trip/${src}.jpg`)
+				const imgString = require(`../assets/images/trip/${src}.jpg`)
 				return {
 					'background-image': `url(${imgString})`
 				}
@@ -57,9 +56,7 @@
 		}
 
 		mounted() {
-			this.$nextTick(() => {
-				this.getData();
-			})
+			this.getData()
 		}
 
 		getData() {
@@ -81,10 +78,10 @@
 			}
 		}
 
-		deleteStart(index: number) {
-			let _this = this;
+		deleteStart(id: number) {
+			const _this = this;
 			this.timeOutEvent = setTimeout(() => {
-				_this.curDeleteNum = index;
+				_this.curDeleteNum = id;
 			}, 500)
 		}
 
@@ -93,13 +90,13 @@
 		}
 
 		cancel() {
-			this.curDeleteNum = '';
+			this.curDeleteNum = 0;
 		}
 
 		deleted(ev: any) {
 			ev.stopPropagation();
 			Vue.delete(this.foodList, this.curDeleteNum);
-			this.curDeleteNum = '';
+			this.curDeleteNum = 0;
 		}
 
 		turnPage(id: number) {
@@ -113,7 +110,7 @@
 	.types {
 		width: 80%;
 		margin-left: 14%;
-		// width:100%;
+		height: 300px;
 		// text-align:center;
 
 		.type {

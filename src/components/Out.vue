@@ -2,23 +2,23 @@
     <div>
         <div class="titleText">Activities</div>
         <div class="activities">
-            <div v-for="(item,index) in actList" :key="item.title">
-                <div :class="['activity',{'activityRightDisable': deleteFlag && curDeleteNum % 2 === 1 && curDeleteNum < index},{'activityLeftDisable1':deleteFlag && curDeleteNum % 2 === 0 && index % 2 === 1 && index > curDeleteNum},{'activityLeftDisable2':deleteFlag && curDeleteNum % 2 === 0 && index % 2 === 0 && index > curDeleteNum}]"
-                    @touchstart="deleteStart(index)" @touchend="deleteEnd">
+            <div v-for="item in actList" :key="item.id">
+                <div :class="['activity',{'activityRightDisable': deleteFlag && curDeleteNum % 2 === 0 && curDeleteNum < item.id},{'activityLeftDisable1':deleteFlag && curDeleteNum % 2 === 1 &&  item.id % 2 === 0 && item.id > curDeleteNum},{'activityLeftDisable2':deleteFlag && curDeleteNum % 2 === 1 && item.id % 2 === 1 && item.id > curDeleteNum}]"
+                    @touchstart="deleteStart(item.id)" @touchend="deleteEnd">
                     <div @click="turnPage(item.id)">
                         <div class="type">{{item.type}}</div>
-                        <img :src="require('../assets/images/trip/'+item.image+'.jpg')" class="img">
+                        <img :src="require('@/assets/images/trip/'+item.image+'.jpg')" class="img">
                         <h4 class="title">{{item.title}}</h4>
                         <p class="end">{{item.endtime}}</p>
                     </div>
                 </div>
-                <div :class="['activity', {'leftdisable': curDeleteNum % 2 === 0},{'rightdisable':curDeleteNum % 2 == 1}]"
-                    v-if="curDeleteNum === index" @click="cancel">
+                <div :class="['activity', {'leftdisable': curDeleteNum % 2 === 1},{'rightdisable':curDeleteNum % 2 == 0}]"
+                    v-if="curDeleteNum === item.id" @click="cancel">
                     <div class="iconContainer"><img src="../assets/images/delete.png" @click="deleted"></div>
                 </div>
             </div>
             <div
-                :class="['activity','add',{'addRightDisable':deleteFlag && curDeleteNum % 2 === 1},{'addLeftDisable':deleteFlag && curDeleteNum % 2 === 0}]">
+                :class="['activity','add',{'addRightDisable':deleteFlag && curDeleteNum % 2 === 0},{'addLeftDisable':deleteFlag && curDeleteNum % 2 === 1}]">
                 <router-link to="/add/outA"><img src="../assets/images/add.png"></router-link>
             </div>
         </div>
@@ -31,23 +31,25 @@
         Prop,
         Vue
     } from 'vue-property-decorator';
-    import { getOutList } from '@/api/out' 
+    import {
+        getOutList
+    } from '@/api/out'
 
     @Component
     export default class Add extends Vue {
         actList: any[] = []
-        curDeleteNum: number | null = null
+        curDeleteNum: number = 1000
         deleteFlag: boolean = false
         timeOutEvent: any = 0
 
         get img(): object {
-			return function (src: string) {
-				let imgString = require(`../assets/images/trip/${src}.jpg`)
-				return {
-					'background-image': `url(${imgString})`
-				}
-			}
-		}
+            return function (src: string) {
+                let imgString = require(`../assets/images/trip/${src}.jpg`)
+                return {
+                    'background-image': `url(${imgString})`
+                }
+            }
+        }
 
         mounted() {
             this.getData();
@@ -56,21 +58,16 @@
         getData() {
             getOutList().then((res: any) => {
                 this.actList = res.data;
-                for (let index in this.actList) {
-                    if (this.actList[index].endtime) {
-                        this.actList[index].endtime += ' 结束';
-                    } else {
-                        this.actList[index].endtime = '----------';
-                    }
-                }
-                // console.log(_this.actList);
+                this.actList.map((act: any) => {
+                    act.endtime = act.endtime ? act.endtime + ' 结束' : '----------'
+                })
             })
         }
 
-        deleteStart(index: number) {
+        deleteStart(id: number) {
             let _this = this;
             this.timeOutEvent = setTimeout(function () {
-                _this.curDeleteNum = index;
+                _this.curDeleteNum = id;
                 _this.deleteFlag = true;
             }, 500)
         }
@@ -86,14 +83,14 @@
 
         deleted(ev: any) {
             ev.stopPropagation();
-            Vue.delete(this.actList, this.curDeleteNum);
+            this.actList.splice(this.curDeleteNum, 1)
             this.deleteFlag = false;
             this.curDeleteNum = 0;
         }
 
         turnPage(id: number) {
-			this.$router.push('/details/out/'+ id);
-		}
+            this.$router.push('/details/out/' + id);
+        }
     }
 </script>
 
@@ -166,7 +163,7 @@
             background-color: rgba(128, 128, 128, 0.6);
             position: relative;
             top: 0;
-            left: -47%;
+            left: -45.6%;
 
             .iconContainer {
                 background-color: red;
@@ -185,7 +182,7 @@
             background-color: rgba(128, 128, 128, 0.6);
             position: relative;
             top: -13.6rem;
-            right: -25%;
+            right: -24.6%;
             height: 12.2rem;
 
             .iconContainer {

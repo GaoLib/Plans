@@ -11,14 +11,15 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { Getter } from 'vuex-class'
 import { getOutList } from '@/api/out'
 
 @Component
-export default class Add extends Vue {
+export default class OutDetail extends Vue {
     curOut: any = null
 
-    @Getter editStatus;
+    get editStatus() {
+        return this.$store.getters.editStatus
+    }
     
     mounted(){
         this.getAddressList();

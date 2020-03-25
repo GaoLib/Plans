@@ -21,7 +21,7 @@
             <div v-for="(value, key,index) in foods" :key="value">
                 <input type="text" @change="title(index)" v-model="foodTitle[index]" class="day">
                 <span :class="index == indexR - 1 ? 'deleteDay' : 'deleteDayhide'" @click="deleteDay(key)">Delete</span>
-                <textarea class="fill" rows="4" @change="text(key,index)" v-model="foodText[index]"></textarea>
+                <textarea class="fill" rows="4" @blur="text(key,index)" v-model="foodText[index]"></textarea>
             </div>
             <button class="fill morebtn" @click="more">One More Food</button>
         </div>
@@ -44,11 +44,11 @@
         address: string = ''
         indexR: number = 0
         foods: any = {}
-        selected: ''
+        selected: string = ''
         foodTitle: string[] = []
         foodText: string[] = []
 
-        saveImg(ev) {
+        saveImg(ev: any) {
             this.image = ev.target.files[0].name;
         }
 
@@ -58,18 +58,18 @@
             this.indexR++;
         }
 
-        deleteDay(key) {
+        deleteDay(key: string) {
             Vue.delete(this.foods, key);
             this.indexR--;
         }
 
-        title(index) {
+        title(index: number) {
             let value = 'Food' + (index + 1);
             Vue.delete(this.foods, value);
             Vue.set(this.foods, this.foodTitle[index], '');
         }
 
-        text(key, index) {
+        text(key: string, index: number) {
             Vue.set(this.foods, key, this.foodText[index]);
         }
     }

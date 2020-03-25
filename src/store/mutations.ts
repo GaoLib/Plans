@@ -2,11 +2,12 @@ import { MutationTree  } from 'vuex'
 import { RootStateTypes } from './types'
 
 const mutations: MutationTree<RootStateTypes> = {
-	EDIT_DETAILS(state: any, name: boolean) {
-		state.editStatus = name;
+	change_edit_state(state: any) {
+		state.editStatus = !state.editStatus
 	},
-	SAVE(state: any, name: boolean) {
-		state.editStatus = name
+	set_token(state: any, token: string) {
+		state.token = token
+		sessionStorage.setItem('token',token)
 	}
 }
 

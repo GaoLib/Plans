@@ -7,7 +7,8 @@ import mutations from './mutations'
 Vue.use(Vuex)
 
 const state = {
-	editStatus: false
+    editStatus: false,
+    token: ''
 }
 
 export default new Vuex.Store({

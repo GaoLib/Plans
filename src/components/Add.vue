@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Add extends Vue {
@@ -18,7 +18,7 @@ export default class Add extends Vue {
 
 	add(){
 		this.success = true;
-		let _this = this;
+		const _this = this;
 		setTimeout(function(){
 			_this.success = false;
 		},2000)
