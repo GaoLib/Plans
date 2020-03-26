@@ -7,3 +7,17 @@ export function login(data: any) {
         data
 	});
 }
+
+export function userInfoAdmin() {
+	return request({
+		url: '/user_info_admin',
+        method: 'get'
+	});
+}
+
+export function userInfoUser() {
+	return request({
+		url: '/user_info_user',
+        method: 'get'
+	});
+}

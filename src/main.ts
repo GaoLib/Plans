@@ -7,8 +7,21 @@ import Icon from 'vue-svg-icon/Icon.vue'
 Vue.config.productionTip = false
 Vue.component('Icon', Icon)
 
-new Vue({
-	router,
-	store,
-	render: h => h(App)
-}).$mount('#app')
+async function main_init() {
+    try {
+        let permission = (await import("@/utils/permission")).permission
+        await permission();
+        return "success"
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+main_init().then(() => {
+	new Vue({
+		router,
+		store,
+		render: h => h(App)
+	}).$mount('#app')
+})
+

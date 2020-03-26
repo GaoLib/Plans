@@ -36,7 +36,7 @@
 		login() {
 			this.$store.dispatch('LoginByUsername', this.account).then(() => {
 				this.$router.push({ path: '/' })
-			}).catch(() => {
+			}).catch((err: string) => {
 				this.messageFlag = true
 			});
 		}

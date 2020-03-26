@@ -8,7 +8,10 @@ Vue.use(Vuex)
 
 const state = {
     editStatus: false,
-    token: ''
+    token: '',
+    routeList: '',
+    roles: '',
+    routes: []
 }
 
 export default new Vuex.Store({

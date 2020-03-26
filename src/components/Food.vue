@@ -1,13 +1,13 @@
 <template>
 	<div>
-		<div class="types">
+		<div :class="['types',{'foodTypeAct': curFoodType}]">
 			<img v-for="type in typeList"
 				:src="curFoodType === type ? require('@/assets/images/food/' + type + 'Active.png') : require('@/assets/images/food/' + type + '.png') "
 				class="type" @click="foodType(type)" :key="type">
 		</div>
 		<div class="foods">
 			<div v-for="item in filterList" :key="item.id">
-				<div :class="['food',{'foodDisable':curDeleteNum+1 === item.id}]" :style="img(item.image)"
+				<div :class="['food',{'foodDisable': curDeleteNum && curDeleteNum+1 === item.id}]" :style="img(item.image)"
 					@touchstart="deleteStart(item.id)" @touchend="deleteEnd">
 					<div @click="turnPage(item.id)">
 						<h2>{{item.destination}}</h2>
@@ -110,12 +110,14 @@
 	.types {
 		width: 80%;
 		margin-left: 14%;
-		height: 300px;
-		// text-align:center;
 
 		.type {
 			margin: 0.4rem 3%;
 		}
+	}
+
+	.foodTypeAct{
+		height: 116px;
 	}
 
 	.foods {
