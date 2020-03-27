@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import { getFoodList } from '@/api/food'
 
 @Component
@@ -49,7 +49,7 @@ export default class FoodDetail extends Vue {
     }
 
     more(){
-        let key = 'Food'+ (this.count+1); 
+        const key = 'Food'+ (this.count+1); 
         this.curFood.recommands.push(key)
         this.count++
     }

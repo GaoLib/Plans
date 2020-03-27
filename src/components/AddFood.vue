@@ -31,7 +31,6 @@
 <script lang="ts">
     import {
         Component,
-        Prop,
         Vue
     } from 'vue-property-decorator';
 
@@ -53,7 +52,7 @@
         }
 
         more() {
-            let key = 'Food' + (this.indexR + 1);
+            const key = 'Food' + (this.indexR + 1);
             Vue.set(this.foods, key, '');
             this.indexR++;
         }
@@ -64,7 +63,7 @@
         }
 
         title(index: number) {
-            let value = 'Food' + (index + 1);
+            const value = 'Food' + (index + 1);
             Vue.delete(this.foods, value);
             Vue.set(this.foods, this.foodTitle[index], '');
         }

@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div :class="['trip','add',{'addDisable':curDeleteNum === tripList.length - 1}]">
-                <router-link to="/add/tripA"><img src="../assets/images/add.png"></router-link>
+                <router-link to="/add/trip"><img src="../assets/images/add.png"></router-link>
             </div>
         </div>
     </div>

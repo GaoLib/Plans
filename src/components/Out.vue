@@ -19,7 +19,7 @@
             </div>
             <div
                 :class="['activity','add',{'addRightDisable':deleteFlag && curDeleteNum % 2 === 0},{'addLeftDisable':deleteFlag && curDeleteNum % 2 === 1}]">
-                <router-link to="/add/outA"><img src="../assets/images/add.png"></router-link>
+                <router-link to="/add/out"><img src="../assets/images/add.png"></router-link>
             </div>
         </div>
     </div>
@@ -28,7 +28,6 @@
 <script lang="ts">
     import {
         Component,
-        Prop,
         Vue
     } from 'vue-property-decorator';
     import {
@@ -44,7 +43,7 @@
 
         get img(): object {
             return function (src: string) {
-                let imgString = require(`../assets/images/trip/${src}.jpg`)
+                const imgString = require(`../assets/images/trip/${src}.jpg`)
                 return {
                     'background-image': `url(${imgString})`
                 }
@@ -65,7 +64,7 @@
         }
 
         deleteStart(id: number) {
-            let _this = this;
+            const _this = this;
             this.timeOutEvent = setTimeout(function () {
                 _this.curDeleteNum = id;
                 _this.deleteFlag = true;

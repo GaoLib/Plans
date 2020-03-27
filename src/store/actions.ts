@@ -39,7 +39,7 @@ const actions: ActionTree<RootStateTypes, any> = {
     },
     GetUserInfo({ commit }) {
         return new Promise((resolve, reject) => {
-            userInfoAdmin().then((res: any) => {
+            userInfoUser().then((res: any) => {
                 let routeList = '', roles = ''
                 res.data.map((item: any, index: number) => {
                     roles += index === res.data.length - 1 ? item.role : item.role + ','
@@ -63,7 +63,7 @@ const actions: ActionTree<RootStateTypes, any> = {
                 menus = store.state.routeList.split(',')
                 accessedRouters = filterAsyncRouter(asyncRouterMap, Array.from(new Set(menus)))
             }
-            commit('set_routes', accessedRouters)
+            commit('set_routes', accessedRouters.push({ path: '*', redirect: '/404' })) // 一定要最后加载
 			resolve(accessedRouters)
         })
     }  

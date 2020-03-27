@@ -19,7 +19,7 @@
 				</div>
 			</div>
 			<div :class="['food','add',{'addDisable':curDeleteNum === foodList.length - 1}]">
-				<router-link to="/add/foodA"><img src="../assets/images/add.png"></router-link>
+				<router-link to="/add/food"><img src="../assets/images/add.png"></router-link>
 			</div>
 		</div>
 	</div>

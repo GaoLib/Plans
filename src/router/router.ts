@@ -11,6 +11,11 @@ export const constantRouterMap = [
 		name: 'main',
 		redirect: '/',
 		component: Main
+	},
+	{
+		path: '/404',
+		name: 'nofound',
+		component: () => import('@/views/NoFound.vue')
 	}
 ]
 
@@ -45,10 +50,9 @@ export const asyncRouterMap = [
 		name: 'add',
 		component: () => import('@/components/Add.vue'),
 		children:[
-			{ path:'tripA',component:() => import('@/components/AddTrip.vue') },
-			{ path:'foodA',component:() => import('@/components/AddFood.vue') },
-			{ path:'outA',component:() => import('@/components/AddOut.vue') }
+			{ path:'trip',component:() => import('@/components/AddTrip.vue') },
+			{ path:'food',component:() => import('@/components/AddFood.vue') },
+			{ path:'out',component:() => import('@/components/AddOut.vue') }
 		]
-	},
-	{ path: '*', redirect: '/404', hidden: true }  // 一定要最后加载
+	}
 ]

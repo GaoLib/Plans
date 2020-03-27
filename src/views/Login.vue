@@ -92,6 +92,7 @@
 
 			.activeBtn {
 				background: #566E4A;
+				color: #ddd;
 			}
 		}
 	}
