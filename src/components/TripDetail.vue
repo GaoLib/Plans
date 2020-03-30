@@ -17,27 +17,41 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { getTripList } from '@/api/trip'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component
 export default class Add extends Vue {
-	curTrip: any = null
+	@Prop({
+        default: () => {
+            return {
+                id: 1,
+                destination: "Dali",
+                description: "xxxxxxxxxx Dali xxxxxxx",
+                price: "￥1090",
+                image: "tm-img-01",
+                done: true,
+                route: {
+                    Day1: "xxxxxxxxxDay1xxxxxxx"
+                }
+            }
+        }
+    })
+    curTrip: any
     count: number = 0
 
     get editStatus() {
         return this.$store.getters.editStatus
     }
 
-    mounted(){
-        this.getAddressList()
+    @Watch('curTrip', {
+        deep: true
+    })
+    watchTrip(oldVal: any, newVal: any){
+        this.count = Object.keys(newVal.route).length
     }
 
-    getAddressList(){
-        getTripList().then((res: any)=>{
-            this.curTrip = res.data.find((item: any) => item.id == this.$route.params.id)
-            this.count = Object.keys(this.curTrip.route).length
-        })
+    mounted() {
+        this.count = Object.keys(this.curTrip.route).length
     }
 
     more(){

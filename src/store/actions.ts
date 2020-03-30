@@ -39,7 +39,7 @@ const actions: ActionTree<RootStateTypes, any> = {
     },
     GetUserInfo({ commit }) {
         return new Promise((resolve, reject) => {
-            userInfoUser().then((res: any) => {
+            userInfoAdmin().then((res: any) => {
                 let routeList = '', roles = ''
                 res.data.map((item: any, index: number) => {
                     roles += index === res.data.length - 1 ? item.role : item.role + ','

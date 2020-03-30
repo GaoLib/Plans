@@ -5,7 +5,7 @@ import { constantRouterMap } from './router'
 Vue.use(VueRouter)
 
 const createRouter: any = () => new VueRouter({
-	scrollBehavior () {
+	scrollBehavior: () => {
 		return { x: 0, y: 0 }
 	},
 	routes: constantRouterMap

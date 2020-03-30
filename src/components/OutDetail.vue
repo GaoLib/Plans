@@ -11,25 +11,31 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { getOutList } from '@/api/out'
 
 @Component
 export default class OutDetail extends Vue {
-    curOut: any = null
+    @Prop({
+        default: () => {
+            return {
+                id: 1,
+                destination: "昊美术馆",
+                price: "￥90",
+                address: "浦东新区祖冲之路2277弄1号",
+                image: "tm-img-11",
+                type: "体验",
+                done: false,
+                description: "上海市 浦东新区祖冲之路2277弄1号",
+                endtime: "2018.07.03",
+                title: "昊美术馆",
+            }
+        }
+    })
+    curOut: any
 
     get editStatus() {
         return this.$store.getters.editStatus
     }
     
-    mounted(){
-        this.getAddressList();
-    }
-
-    getAddressList(){
-        getOutList().then((res: any)=>{
-            this.curOut = res.data.find((item: any) => item.id == this.$route.params.id)
-        })
-    }
 }
 </script>
 

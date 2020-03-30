@@ -6,7 +6,9 @@
                 @click="haveDone" class="done">
         </div>
         <div class="details">
-            <router-view />
+            <food-detail v-show="path === 'food'" :curFood="curItem"></food-detail>
+            <out-detail v-show="path === 'out'" :curOut="curItem"></out-detail>
+            <trip-detail v-show="path === 'trip'" :curTrip="curItem"></trip-detail>
         </div>
         <div class="backContainer" v-if="backFlag">
             <div class="backConfirm">
@@ -25,6 +27,9 @@
         Component,
         Vue
     } from 'vue-property-decorator';
+    import FoodDetail from './FoodDetail.vue'
+    import OutDetail from './OutDetail.vue'
+    import TripDetail from './TripDetail.vue'
     import {
         getFoodList
     } from '@/api/food'
@@ -35,11 +40,18 @@
         getTripList
     } from '@/api/trip'
 
-    @Component
+    @Component({
+        components: {
+            FoodDetail,
+            OutDetail,
+            TripDetail
+        }
+    })
     export default class Details extends Vue {
         done: boolean = false
         path: string = ''
         backFlag: boolean = false
+        curItem: any = null
 
         get editStatus() {
             return this.$store.getters.editStatus
@@ -54,26 +66,26 @@
             switch (this.path) {
                 case 'food':
                     getFoodList().then((res: any) => {
-                        this.done = res.data.find((item: any) => {
-                            item.id == this.$route.params.id
-                        }).done
+                        this.curItem = res.data.find((item: any) => {
+                            return item.id == this.$route.params.id
+                        })
                     })
                     break;
                 case 'trip':
                     getTripList().then((res: any) => {
-                        this.done = res.data.find((item: any) => {
-                            item.id == this.$route.params.id
-                        }).done
+                        this.curItem = res.data.find((item: any) => {
+                            return item.id == this.$route.params.id
+                        })
                     })
                     break;
                 case 'out':
                     getOutList().then((res: any) => {
-                        this.done = res.data.find((item: any) => {
-                            item.id == this.$route.params.id
-                        }).done
+                        this.curItem = res.data.find((item: any) => {
+                            return item.id == this.$route.params.id
+                        })
                     })
             }
-
+            this.done = this.curItem.done
         }
 
         haveDone() {

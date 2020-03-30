@@ -20,28 +20,35 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { getFoodList } from '@/api/food'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component
 export default class FoodDetail extends Vue {
-    curFood: any = null
+    @Prop({
+        default: () => {
+            return {
+                id: 1,
+                destination: "Ice Monster",
+                price: "￥50",
+                address: "南京西路789号兴业太古汇三楼L391",
+                image: "tm-img-11",
+                type: "icecream",
+                done: false,
+                recommands: ["变态咖啡棉花甜"],
+                reasons: ['xxx']
+            }
+        }
+    })
+    curFood: any
+
     count: number = 0
-    titles: string[] = []
 
     get editStatus(){
         return this.$store.getters.editStatus
     }
 
-    mounted(){
-         this.getAddressList();
-    }
-
-    getAddressList(){
-        getFoodList().then((res: any)=>{
-            this.curFood = res.data.find((item: any) => item.id == this.$route.params.id)
-            this.titles = this.curFood.recommands
-        })
+    get titles() {
+        return this.curFood.recommands
     }
         
     titleChange(key: string,index: number){
