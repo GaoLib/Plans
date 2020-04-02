@@ -51,7 +51,7 @@ export default class Add extends Vue {
     }
 
     mounted() {
-        this.count = Object.keys(this.curTrip.route).length
+        this.count = this.curTrip.route && Object.keys(this.curTrip.route).length
     }
 
     more(){

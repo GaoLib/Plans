@@ -4,17 +4,24 @@ import { constantRouterMap } from './router'
 
 Vue.use(VueRouter)
 
-const createRouter: any = () => new VueRouter({
-	scrollBehavior: () => {
-		return { x: 0, y: 0 }
-	},
+const router = new VueRouter({
+    mode: 'history',
+	base: process.env.BASE_URL,
 	routes: constantRouterMap
-  })
+})
+	
 
-const router = createRouter()
+// const createRouter = () => new VueRouter({
+// 	scrollBehavior: () => {
+// 		return { x: 0, y: 0 }
+// 	},
+// 	routes: constantRouterMap
+//   })
 
-export function resetRouter() {
-	const newRouter = createRouter()
-	router.matcher =  newRouter.matcher
-}
+// const router: any = createRouter()
+
+// export function resetRouter() {
+// 	const newRouter: any = createRouter()
+// 	router.matcher =  newRouter.matcher
+// }
 export default router

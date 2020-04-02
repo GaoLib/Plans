@@ -21,6 +21,12 @@ const mutations: MutationTree<RootStateTypes> = {
 	},
 	set_roles(state: any, roles: string){
 		state.roles = roles
+	},
+	set_operation_list(state: any, operationList: string){
+		state.operationList = operationList
+	},
+	set_page(state: any, page: string){
+		state.page = page
 	}
 }
 

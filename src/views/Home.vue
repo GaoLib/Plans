@@ -36,18 +36,19 @@
 
 	@Component({})
 	export default class Home extends Vue {
-		curPage: string | null = 'out'
+		curPage: string = ''
 		tripActive: string = tripActive
 		trip: string = trip
 		foodActive: string = foodActive
 		food: string = food
 
-		// mounted() {
-		// 	this.curPage = 'out'
-		// }
+		mounted() {
+			this.curPage = this.$store.state.page ? this.$store.state.page : 'out'
+		}
 
 		choosePage(type: string) {
 			this.curPage = type;
+			this.$store.commit('set_page',type)
 		}
 
 	}

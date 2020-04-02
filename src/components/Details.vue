@@ -16,9 +16,11 @@
                 <button @click="confirmed">Yes</button><button @click="cancel">No</button>
             </div>
         </div>
-        <div class="edit" @click="save"><img
+        <div class="edit" @click="save" v-permission:operation="path+'_edit'">
+            <img
                 :src="editStatus ? require('@/assets/images/trip/save.png') : require('@/assets/images/trip/edit.png')"
-                class="editIcon"></div>
+                class="editIcon">
+        </div>
     </div>
 </template>
 

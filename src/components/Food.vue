@@ -18,7 +18,7 @@
 					<div class="iconContainer"><img src="../assets/images/delete.png" @click="deleted"></div>
 				</div>
 			</div>
-			<div :class="['food','add',{'addDisable':curDeleteNum === foodList.length - 1}]">
+			<div :class="['food','add',{'addDisable':curDeleteNum === foodList.length - 1}]" v-permission:operation="'food_add'">
 				<router-link to="/add/food"><img src="../assets/images/add.png"></router-link>
 			</div>
 		</div>

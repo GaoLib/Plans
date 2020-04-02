@@ -50,9 +50,9 @@ export const asyncRouterMap = [
 		name: 'add',
 		component: () => import('@/components/Add.vue'),
 		children:[
-			{ path:'trip',component:() => import('@/components/AddTrip.vue') },
-			{ path:'food',component:() => import('@/components/AddFood.vue') },
-			{ path:'out',component:() => import('@/components/AddOut.vue') }
+			{ path:'trip',name: 'trip_add',component:() => import('@/components/AddTrip.vue') },
+			{ path:'food',name: 'trip_add',component:() => import('@/components/AddFood.vue') },
+			{ path:'out',name: 'trip_add',component:() => import('@/components/AddOut.vue') }
 		]
 	}
 ]

@@ -3,5 +3,7 @@ export interface RootStateTypes {
     token: string,
     routeList: string
     roles: string
-    routes: any[]
+    routes: any[],
+    operationList: string,
+    page: string
 }

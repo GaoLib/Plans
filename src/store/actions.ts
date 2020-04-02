@@ -39,14 +39,16 @@ const actions: ActionTree<RootStateTypes, any> = {
     },
     GetUserInfo({ commit }) {
         return new Promise((resolve, reject) => {
-            userInfoAdmin().then((res: any) => {
-                let routeList = '', roles = ''
+            userInfoUser().then((res: any) => {
+                let routeList = '', roles = '', operationList = ''
                 res.data.map((item: any, index: number) => {
                     roles += index === res.data.length - 1 ? item.role : item.role + ','
                     routeList += index === res.data.length - 1 ? item.routeList : item.routeList + ','
+                    operationList += index === res.data.length - 1 ? item.operationList : item.operationList + ','
                 })
                 commit('set_route_list', routeList)
                 commit('set_roles', roles)
+                commit('set_operation_list', operationList)
                 resolve(res.data)
             }).catch((error: string) => {
                 reject(error)

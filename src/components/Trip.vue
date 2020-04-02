@@ -22,7 +22,7 @@
                     <div class="iconContainer"><img src="../assets/images/delete.png" @click="deleted"></div>
                 </div>
             </div>
-            <div :class="['trip','add',{'addDisable':curDeleteNum === tripList.length - 1}]">
+            <div :class="['trip','add',{'addDisable':curDeleteNum === tripList.length - 1}]" v-permission:operation="'trip_add'">
                 <router-link to="/add/trip"><img src="../assets/images/add.png"></router-link>
             </div>
         </div>

@@ -11,7 +11,9 @@ const state = {
     token: '',
     routeList: '',
     roles: '',
-    routes: []
+    routes: [],
+    operationList: '',
+    page: ''
 }
 
 export default new Vuex.Store({

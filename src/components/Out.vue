@@ -18,8 +18,9 @@
                 </div>
             </div>
             <div
-                :class="['activity','add',{'addRightDisable':deleteFlag && curDeleteNum % 2 === 0},{'addLeftDisable':deleteFlag && curDeleteNum % 2 === 1}]">
-                <router-link to="/add/out"><img src="../assets/images/add.png"></router-link>
+                :class="['activity','add',{'addRightDisable':deleteFlag && curDeleteNum % 2 === 0},{'addLeftDisable':deleteFlag && curDeleteNum % 2 === 1}]"
+                @click="add" v-permission:operation="'out_add'">
+                <img src="../assets/images/add.png">
             </div>
         </div>
     </div>
@@ -33,8 +34,20 @@
     import {
         getOutList
     } from '@/api/out'
+    import store from '@/store'
 
-    @Component
+    @Component({
+        // directives: {
+        //     permission: {
+        //         bind(el: any, operation: any){
+        //             let flag = store.state.operationList.split(',').find((item: string) => { return item === operation.value})
+        //             if(!flag){
+        //                 el.style.display = 'none'
+        //             }
+        //         }
+        //     }
+        // }
+    })
     export default class Add extends Vue {
         actList: any[] = []
         curDeleteNum: number = 1000
@@ -89,6 +102,10 @@
 
         turnPage(id: number) {
             this.$router.push('/details/out/' + id);
+        }
+
+        add() {
+            this.$router.push('/add/out')
         }
     }
 </script>
