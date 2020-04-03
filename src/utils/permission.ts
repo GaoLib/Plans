@@ -6,13 +6,13 @@ const whiteList: string[] = ['/login'] // no redirect 的白名单
 export const permission = async () => {
     router.beforeEach(async (to: any, from: any, next: any) => {
         store.commit('get_token')
-        if (store.state.token) { 
+        if (store.getters.token) { 
             if (to.path === '/login') {
                 next({
                     path: '/'
                 });
             } else {
-                if (store.state.roles.length === 0) { 
+                if (store.getters.roles.length === 0) { 
                     const data = await store.dispatch('GetUserInfo')
                     const accessedRouters = await store.dispatch('GenerateRoutes', data)
                     router.addRoutes(accessedRouters)

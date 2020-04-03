@@ -1,27 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
-import actions from './actions'
-import mutations from './mutations'
 
 Vue.use(Vuex)
 
-const state = {
-    editStatus: false,
-    token: '',
-    routeList: '',
-    roles: '',
-    routes: [],
-    operationList: '',
-    page: ''
-}
+const modulesFiles = require.context('./modules', true, /\.ts$/)
+const modules = modulesFiles.keys().reduce((modules: any, modulePath: any) => {
+    // set './app.ts' => 'app'
+    const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+    const value = modulesFiles(modulePath)
+    modules[moduleName] = value.default
+    return modules
+  }, {})
 
 export default new Vuex.Store({
-    state,
-	mutations,
 	getters,
-    actions,
-    modules: {
-      
-    }
+    modules
 })

@@ -1,8 +1,8 @@
 <template>
 	<div class="home">
 		<div class="header">
-			<img src="../assets/images/logo.gif">
-			<div class="searchBox">
+			<img src="../assets/images/logo.gif" @click="logout">
+			<div class="search_box">
 				<Icon class="search" name="search" scale="2"></Icon>
 			</div>
 			<Icon class="shop" name="shop" scale="3"></Icon>
@@ -21,6 +21,7 @@
 				<img :src="curPage == 'food' ? foodActive : food " class="food" @click="choosePage('food')">
 			</router-link>
 		</div>
+		<confirm-modal v-bind="modal" @confirmed="confirmed" @cancel="cancel"></confirm-modal>
 	</div>
 </template>
 
@@ -33,22 +34,46 @@
 	import trip from '../assets/images/trip.png'
 	import foodActive from '../assets/images/foodActive.png'
 	import food from '../assets/images/food.png'
+	import ConfirmModal from '../components/common/Modal.vue'
 
-	@Component({})
+	@Component({
+		components: {
+			ConfirmModal
+		}
+	})
 	export default class Home extends Vue {
 		curPage: string = ''
 		tripActive: string = tripActive
 		trip: string = trip
 		foodActive: string = foodActive
 		food: string = food
+		modal: any = {
+            title: 'Logout?',
+            showFlag: false
+        }
 
 		mounted() {
-			this.curPage = this.$store.state.page ? this.$store.state.page : 'out'
+			this.curPage = this.$store.getters.page ? this.$store.getters.page : 'out'
 		}
 
 		choosePage(type: string) {
 			this.curPage = type;
 			this.$store.commit('set_page',type)
+		}
+
+		logout() {
+			this.modal.showFlag = true
+		}
+
+		confirmed() {
+			this.$store.dispatch('logout').then(() => {
+				this.cancel()
+				this.$router.push('/login')
+			})
+		}
+
+		cancel() {
+			this.modal.showFlag = false
 		}
 
 	}
@@ -70,7 +95,7 @@
 			margin-left: 4%;
 		}
 
-		.searchBox {
+		.search_box {
 			margin-left: 8%;
 			margin-top: 3%;
 			display: inline-block;

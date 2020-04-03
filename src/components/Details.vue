@@ -10,12 +10,7 @@
             <out-detail v-show="path === 'out'" :curOut="curItem"></out-detail>
             <trip-detail v-show="path === 'trip'" :curTrip="curItem"></trip-detail>
         </div>
-        <div class="backContainer" v-if="backFlag">
-            <div class="backConfirm">
-                <h3>Save changes?</h3>
-                <button @click="confirmed">Yes</button><button @click="cancel">No</button>
-            </div>
-        </div>
+        <confirm-modal v-bind="modal" @confirmed="confirmed" @cancel="cancel"></confirm-modal>
         <div class="edit" @click="save" v-permission:operation="path+'_edit'">
             <img
                 :src="editStatus ? require('@/assets/images/trip/save.png') : require('@/assets/images/trip/edit.png')"
@@ -41,19 +36,24 @@
     import {
         getTripList
     } from '@/api/trip'
+    import ConfirmModal from './common/Modal.vue'
 
     @Component({
         components: {
             FoodDetail,
             OutDetail,
-            TripDetail
+            TripDetail,
+            ConfirmModal
         }
     })
     export default class Details extends Vue {
         done: boolean = false
         path: string = ''
-        backFlag: boolean = false
-        curItem: any = null
+        curItem: any = null 
+        modal: any = {
+            title: 'Save changes?',
+            showFlag: false
+        }
 
         get editStatus() {
             return this.$store.getters.editStatus
@@ -96,22 +96,23 @@
 
         back() {
             if (this.editStatus) {
-                this.backFlag = true
+                this.modal.showFlag = true
             } else {
                 this.cancel()
             }
         }
 
         confirmed() {
-            this.save()
+            this.$store.commit('change_edit_state', false)
             this.$router.back()
         }
 
         save() {
-            this.$store.commit('change_edit_state')
+            this.$store.commit('change_edit_state', !this.editStatus)
         }
 
         cancel() {
+            this.$store.commit('change_edit_state', false)
             this.$router.back()
         }
     }
@@ -161,7 +162,7 @@
         }
     }
 
-    .backContainer {
+    .back_wrap {
         position: fixed;
         width: 100%;
         height: 100%;

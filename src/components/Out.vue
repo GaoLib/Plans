@@ -34,7 +34,6 @@
     import {
         getOutList
     } from '@/api/out'
-    import store from '@/store'
 
     @Component({
         // directives: {
