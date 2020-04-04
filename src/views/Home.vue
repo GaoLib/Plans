@@ -15,7 +15,7 @@
 				<img :src="curPage == 'trip' ? tripActive : trip" class="trip" @click="choosePage('trip')">
 			</router-link>
 			<router-link to="/out">
-				<span :class="curPage == 'out' ? 'outActive' :'out' " @click="choosePage('out')">Go Go Now</span>
+				<span :class="curPage == 'out' ? 'out_active' :'out' " @click="choosePage('out')">Go Go Now</span>
 			</router-link>
 			<router-link to="/food">
 				<img :src="curPage == 'food' ? foodActive : food " class="food" @click="choosePage('food')">
@@ -35,6 +35,7 @@
 	import foodActive from '../assets/images/foodActive.png'
 	import food from '../assets/images/food.png'
 	import ConfirmModal from '../components/common/Modal.vue'
+	import { ModalData } from '@/types/modal'
 
 	@Component({
 		components: {
@@ -42,12 +43,12 @@
 		}
 	})
 	export default class Home extends Vue {
-		curPage: string = ''
+		curPage = ''
 		tripActive: string = tripActive
 		trip: string = trip
 		foodActive: string = foodActive
 		food: string = food
-		modal: any = {
+		modal: ModalData = {
             title: 'Logout?',
             showFlag: false
         }
@@ -151,7 +152,7 @@
 			width: 40%;
 		}
 
-		.outActive {
+		.out_active {
 			color: #546B48;
 			font-size: 1.4rem;
 			z-index: 999;

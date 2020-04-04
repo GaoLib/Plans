@@ -1,16 +1,16 @@
 <template>
     <div>
-        <div class="galleryBox">
+        <div class="gallery_box">
             <img :src="require('../assets/images/trip/'+rollList[(rollList.indexOf(curGallery)-1+rollList.length) % rollList.length]+'.png')"
-                class="leftGallery">
-            <img :src="require('../assets/images/trip/'+curGallery+'.png')" class="centerGallery" v-on:touchstart="touchStart"
+                class="left_gallery">
+            <img :src="require('../assets/images/trip/'+curGallery+'.png')" class="center_gallery" v-on:touchstart="touchStart"
                 v-on:touchend="touchEnd">
             <img :src="require('../assets/images/trip/'+rollList[(rollList.indexOf(curGallery)+1+rollList.length) % rollList.length]+'.png')"
-                class="rightGallery">
+                class="right_gallery">
         </div>
         <div class="trips">
             <div v-for="item in tripList" :key="item.id">
-                <div :class="['trip',{'tripDisable': item.id > 1 && curDeleteNum+1 === item.id}]"
+                <div :class="['trip',{'trip_disable': item.id > 1 && curDeleteNum+1 === item.id}]"
                     :style="img(item.image)" @touchstart="deleteStart(item.id)"
                     @touchend="deleteEnd">
                     <div @click="turnPage(item.id)">
@@ -19,10 +19,10 @@
                     </div>
                 </div>
                 <div class="trip disable" v-if="curDeleteNum === item.id" @click="cancel">
-                    <div class="iconContainer"><img src="../assets/images/delete.png" @click="deleted"></div>
+                    <div class="icon_container"><img src="../assets/images/delete.png" @click="deleted"></div>
                 </div>
             </div>
-            <div :class="['trip','add',{'addDisable':curDeleteNum === tripList.length - 1}]" v-permission:operation="'trip_add'">
+            <div :class="['trip','add',{'add_disable':curDeleteNum === tripList.length - 1}]" v-permission:operation="'trip_add'">
                 <router-link to="/add/trip"><img src="../assets/images/add.png"></router-link>
             </div>
         </div>
@@ -32,25 +32,25 @@
 <script lang="ts">
     import {
         Component,
-        Prop,
         Vue
     } from 'vue-property-decorator';
     import {
         getTripList
     } from '@/api/trip'
+    import { Trip } from '@/types/trip'
 
     @Component
-    export default class Trip extends Vue {
-        tripList: any[] = []
-        startX: number = 0
+    export default class TripMain extends Vue {
+        tripList: Trip[] = []
+        startX = 0
         rollList: string[] = ['chongqing', 'huangshan', 'xiamen']
-        curGallery: string = 'huangshan'
-        timeOutEvent: any = 0
-        curDeleteNum: number = 0
+        curGallery = 'huangshan'
+        timeOutEvent = 0
+        curDeleteNum = 0
 
         get img(): object {
 			return function (src: string) {
-				let imgString = require(`../assets/images/trip/${src}.jpg`)
+				const imgString = require(`../assets/images/trip/${src}.jpg`)
 				return {
 					'background-image': `url(${imgString})`
 				}
@@ -68,16 +68,16 @@
         }
 
         touchStart(ev: any) {
-            let eve = ev || event; //浏览器兼容问题，有的ev，有的用event
+            const eve = ev || event; //浏览器兼容问题，有的ev，有的用event
             if (eve.touches.length == 1) {
                 this.startX = eve.touches[0].clientX;
             }
         }
 
         touchEnd(ev: any) {
-            let eve = ev || event;
-            let index = this.rollList.indexOf(this.curGallery);
-            let length = this.rollList.length;
+            const eve = ev || event;
+            const index = this.rollList.indexOf(this.curGallery);
+            const length = this.rollList.length;
             if (eve.changedTouches.length == 1) {
                 if (eve.changedTouches[0].clientX > this.startX) {
                     this.curGallery = this.rollList[(index - 1 + length) % length];
@@ -88,7 +88,7 @@
         }
 
         deleteStart(id: number) {
-            let _this = this;
+            const _this = this;
             this.timeOutEvent = setTimeout(function () {
                 _this.curDeleteNum = id;
             }, 500)
@@ -126,7 +126,7 @@
         -o-transform: matrix($value);
     }
 
-    .galleryBox {
+    .gallery_box {
         width: 100%;
         height: 10rem;
         background-color: #546B48;
@@ -134,14 +134,14 @@
         overflow: hidden;
         position: relative;
 
-        .centerGallery {
+        .center_gallery {
             height: 8rem;
             width: 68%;
             margin: 1rem auto;
             border-radius: 6%;
         }
 
-        .leftGallery {
+        .left_gallery {
             height: 8rem;
             width: 60%;
             border-radius: 6%;
@@ -151,7 +151,7 @@
             @include matrix(1.0, 0.1, 0, 0.9, 0, 0);
         }
 
-        .rightGallery {
+        .right_gallery {
             height: 8rem;
             width: 60%;
             border-radius: 6%;
@@ -187,7 +187,7 @@
             }
         }
 
-        .tripDisable {
+        .trip_disable {
             margin-top: -10rem;
         }
 
@@ -197,7 +197,7 @@
             top: -10rem;
             left: 0;
 
-            .iconContainer {
+            .icon_container {
                 background-color: red;
                 margin: 2.6rem auto;
                 width: 4rem;
@@ -219,7 +219,7 @@
             }
         }
 
-        .addDisable {
+        .add_disable {
             margin-top: -10rem;
         }
     }

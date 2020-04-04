@@ -6,14 +6,14 @@
 		<form class="form">
 			<section class="sections">
 				<Icon class="icons" name="account" scale="2"></Icon>
-				<input placeholder="Please Enter Username" type="text" v-model="account.username" class="txtInput" @blur="check" />
+				<input placeholder="Please Enter Username" type="text" v-model="account.username" class="txt_input" @blur="check" />
 			</section>
 			<section class="sections">
 				<Icon class="icons" name="password" scale="2"></Icon>
 				<input placeholder="Please Enter Password" type="password" v-model="account.password"
-					class="txtInput" @blur="check" />
+					class="txt_input" @blur="check" />
 			</section>
-			<button type="button" :class="['loginBtn',{'activeBtn': btnFlag}]" :disabled="!btnFlag" @click="login">Login</button>
+			<button type="button" :class="['login_btn',{'active_btn': btnFlag}]" :disabled="!btnFlag" @click="login">Login</button>
 		</form>
 		<p v-if="messageFlag" style="color: #cd4848">Login Failed!</p>
 	</div>
@@ -24,25 +24,26 @@
 		Component,
 		Vue
 	} from 'vue-property-decorator';
+	import { Account } from '@/types/account'
 	@Component({})
 	export default class Login extends Vue {
-		account: any = {
+		account: Account = {
 			username: '',
 			password: ''
 		}
-		btnFlag: boolean = false
-		messageFlag: boolean = false
+		btnFlag = false
+		messageFlag = false
 
 		login() {
 			this.$store.dispatch('LoginByUsername', this.account).then(() => {
 				this.$router.push({ path: '/' })
-			}).catch((err: string) => {
+			}).catch(() => {
 				this.messageFlag = true
 			});
 		}
 
 		check() {
-			this.btnFlag = this.account.username && this.account.password
+			this.btnFlag = !!this.account.username && !!this.account.password
 		}
 	}
 </script>
@@ -68,7 +69,7 @@
 			.sections {
 				margin: 6px auto;
 
-				.txtInput {
+				.txt_input {
 					width: 70%;
 					vertical-align: middle;
 					border: 0px;
@@ -83,14 +84,14 @@
 				}
 			}
 
-			.loginBtn {
+			.login_btn {
 				width: 76%;
 				height: 30px;
 				margin-top: 10px;
 				border: 0px;
 			}
 
-			.activeBtn {
+			.active_btn {
 				background: #566E4A;
 				color: #ddd;
 			}

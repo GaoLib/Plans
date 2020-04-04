@@ -12,32 +12,30 @@
             <textarea v-model="curTrip.route[key]" class="value" :disabled="!editStatus"></textarea>
         </div>
         </div>
-        <button class="morebtn" v-if="editStatus" @click="more">One More Day</button>
+        <button class="more_btn" v-if="editStatus" @click="more">One More Day</button>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Trip } from '@/types/trip'
 
 @Component
 export default class Add extends Vue {
 	@Prop({
-        default: () => {
-            return {
-                id: 1,
-                destination: "Dali",
-                description: "xxxxxxxxxx Dali xxxxxxx",
-                price: "￥1090",
-                image: "tm-img-01",
-                done: true,
-                route: {
-                    Day1: "xxxxxxxxxDay1xxxxxxx"
-                }
-            }
-        }
     })
-    curTrip: any
-    count: number = 0
+    curTrip: Trip = {
+        id: 1,
+        destination: "Dali",
+        description: "xxxxxxxxxx Dali xxxxxxx",
+        price: "￥1090",
+        image: "tm-img-01",
+        done: true,
+        route: {
+            Day1: "xxxxxxxxxDay1xxxxxxx"
+        }
+    }
+    count = 0
 
     get editStatus() {
         return this.$store.getters.editStatus
@@ -46,7 +44,7 @@ export default class Add extends Vue {
     @Watch('curTrip', {
         deep: true
     })
-    watchTrip(oldVal: any, newVal: any){
+    watchTrip(oldVal: Trip, newVal: Trip){
         this.count = Object.keys(newVal.route).length
     }
 
@@ -55,13 +53,13 @@ export default class Add extends Vue {
     }
 
     more(){
-        let key = 'Day'+(this.count+1);
+        const key = 'Day'+(this.count+1);
         Vue.set(this.curTrip.route,key,'');
         this.count ++;
     }
 
     del(index: number){
-        let value = 'Day' + (index + 1);
+        const value = 'Day' + (index + 1);
         Vue.delete(this.curTrip.route,value);
         this.count --;
     }
@@ -110,7 +108,7 @@ export default class Add extends Vue {
             }
         }
     }
-    .morebtn{
+    .more_btn{
         margin-top:1rem;
         border:none;
         background-color: #91AE81; 

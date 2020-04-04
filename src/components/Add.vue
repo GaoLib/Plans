@@ -3,9 +3,9 @@
 		<div class="header">
 			<p class="back" v-on:click="$router.back()">Cancel</p>
 		</div>
-		<div class="addcontent"><router-view/></div>
-		<div class="addbtn" @click="add">Add</div>
-		<div class="popMessage" v-if="success">Successful</div>
+		<div class="add_content"><router-view/></div>
+		<div class="add_btn" @click="add">Add</div>
+		<div class="pop_message" v-if="success">Successful</div>
 	</div>
 </template>
 
@@ -14,14 +14,14 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Add extends Vue {
-	success: boolean = false
+	success = false
 
 	add(){
 		this.success = true;
 		const _this = this;
-		setTimeout(function(){
+		setTimeout(()=>{
 			_this.success = false;
-		},2000)
+		},1000)
 	}
 }
 </script>
@@ -43,11 +43,11 @@ export default class Add extends Vue {
 		font-weight:bold;
     }
 }
-    .addcontent{
+    .add_content{
 		margin-top:3rem;
 		margin-bottom:3rem;
     }
-   .addbtn{
+   .add_btn{
 		width:100%;
 		position:fixed;
 		bottom:0;
@@ -58,7 +58,7 @@ export default class Add extends Vue {
 		color:white;
 		font-size:1.2rem;
    }
-   .popMessage{
+   .pop_message{
 		font-size:1.4rem;
 		padding:1rem 2rem;
 		background-color: lightgray;

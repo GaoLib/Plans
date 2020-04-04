@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="titleText">Activities</div>
+        <div class="title_text">Activities</div>
         <div class="activities">
             <div v-for="item in actList" :key="item.id">
-                <div :class="['activity',{'activityRightDisable': deleteFlag && curDeleteNum % 2 === 0 && curDeleteNum < item.id},{'activityLeftDisable1':deleteFlag && curDeleteNum % 2 === 1 &&  item.id % 2 === 0 && item.id > curDeleteNum},{'activityLeftDisable2':deleteFlag && curDeleteNum % 2 === 1 && item.id % 2 === 1 && item.id > curDeleteNum}]"
+                <div :class="['activity',{'activity_right_disable': deleteFlag && curDeleteNum % 2 === 0 && curDeleteNum < item.id},{'activity_left_disable1':deleteFlag && curDeleteNum % 2 === 1 &&  item.id % 2 === 0 && item.id > curDeleteNum},{'activity_left_disable2':deleteFlag && curDeleteNum % 2 === 1 && item.id % 2 === 1 && item.id > curDeleteNum}]"
                     @touchstart="deleteStart(item.id)" @touchend="deleteEnd">
                     <div @click="turnPage(item.id)">
                         <div class="type">{{item.type}}</div>
@@ -12,13 +12,13 @@
                         <p class="end">{{item.endtime}}</p>
                     </div>
                 </div>
-                <div :class="['activity', {'leftdisable': curDeleteNum % 2 === 1},{'rightdisable':curDeleteNum % 2 == 0}]"
+                <div :class="['activity', {'left_disable': curDeleteNum % 2 === 1},{'right_disable':curDeleteNum % 2 == 0}]"
                     v-if="curDeleteNum === item.id" @click="cancel">
-                    <div class="iconContainer"><img src="../assets/images/delete.png" @click="deleted"></div>
+                    <div class="icon_container"><img src="../assets/images/delete.png" @click="deleted"></div>
                 </div>
             </div>
             <div
-                :class="['activity','add',{'addRightDisable':deleteFlag && curDeleteNum % 2 === 0},{'addLeftDisable':deleteFlag && curDeleteNum % 2 === 1}]"
+                :class="['activity','add',{'add_right_disable':deleteFlag && curDeleteNum % 2 === 0},{'add_left_disable':deleteFlag && curDeleteNum % 2 === 1}]"
                 @click="add" v-permission:operation="'out_add'">
                 <img src="../assets/images/add.png">
             </div>
@@ -110,7 +110,7 @@
 </script>
 
 <style scoped lang="scss">
-    .titleText {
+    .title_text {
         width: 94%;
         background-color: #566E4A;
         text-align: center;
@@ -161,26 +161,26 @@
             }
         }
 
-        .activityRightDisable {
+        .activity_right_disable {
             top: -14rem;
         }
 
-        .activityLeftDisable1 {
+        .activity_left_disable1 {
             top: -13.6rem;
             left: 50%;
         }
 
-        .activityLeftDisable2 {
+        .activity_left_disable2 {
             left: -48%;
         }
 
-        .leftdisable {
+        .left_disable {
             background-color: rgba(128, 128, 128, 0.6);
             position: relative;
             top: 0;
             left: -45.6%;
 
-            .iconContainer {
+            .icon_container {
                 background-color: red;
                 margin: 4rem auto;
                 width: 4rem;
@@ -193,14 +193,14 @@
             }
         }
 
-        .rightdisable {
+        .right_disable {
             background-color: rgba(128, 128, 128, 0.6);
             position: relative;
             top: -13.6rem;
             right: -24.6%;
             height: 12.2rem;
 
-            .iconContainer {
+            .icon_container {
                 background-color: red;
                 margin: 4rem auto;
                 width: 4rem;
@@ -221,11 +221,11 @@
             }
         }
 
-        .addRightDisable {
+        .add_right_disable {
             margin-top: -12rem;
         }
 
-        .addLeftDisable {
+        .add_left_disable {
             left: -48%;
         }
     }

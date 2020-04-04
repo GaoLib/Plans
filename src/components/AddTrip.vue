@@ -8,10 +8,10 @@
             <textarea placeholder="Description" class="fill" rows="4" v-model="description"></textarea>
             <div v-for="(value, key,index) in route" :key="value">
                 <span class="day">{{key}}</span>
-                <span :class="index == indexR - 1 ? 'deleteDay' : 'deleteDayhide'" @click="deleteDay(index)">Delete</span>
+                <span :class="index == indexR - 1 ? 'delete_day' : 'delete_day_hide'" @click="delete_day(index)">Delete</span>
                 <textarea class="fill" rows="4" v-model="route[key]"></textarea>
             </div>
-            <button class="fill morebtn" @click="more">One More Day</button>
+            <button class="fill more_btn" @click="more">One More Day</button>
         </div>
     </div>
 </template>
@@ -38,7 +38,7 @@ export default class AddTrip extends Vue {
         Vue.set(this.route,key,'');
     }
 
-    deleteDay(index: number){
+    delete_day(index: number){
         let value = 'Day' + (index + 1);
         Vue.delete(this.route,value);
         this.indexR --;
@@ -67,7 +67,7 @@ export default class AddTrip extends Vue {
         top:6rem;
         opacity:0;
     }
-    .morebtn{
+    .more_btn{
         margin-top:1rem;
         border:none;
         background-color: #91AE81; 
@@ -78,14 +78,14 @@ export default class AddTrip extends Vue {
         margin-bottom:0.4rem;
         margin-top:0.4rem;
     }
-    .deleteDay{
+    .delete_day{
         float:right;
         margin-right:6%;
         color: #91AE81;
         margin-top:0.4rem;
         display:block;
     }
-    .deleteDayhide{
+    .delete_day_hide{
         float:right;
         margin-right:6%;
         color: #91AE81;

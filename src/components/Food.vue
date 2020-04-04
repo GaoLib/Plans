@@ -1,13 +1,13 @@
 <template>
 	<div>
-		<div :class="['types',{'foodTypeAct': curFoodType}]">
+		<div :class="['types',{'food_type_act': curFoodType}]">
 			<img v-for="type in typeList"
 				:src="curFoodType === type ? require('@/assets/images/food/' + type + 'Active.png') : require('@/assets/images/food/' + type + '.png') "
 				class="type" @click="foodType(type)" :key="type">
 		</div>
 		<div class="foods">
 			<div v-for="item in filterList" :key="item.id">
-				<div :class="['food',{'foodDisable': curDeleteNum && curDeleteNum+1 === item.id}]" :style="img(item.image)"
+				<div :class="['food',{'food_disable': curDeleteNum && curDeleteNum+1 === item.id}]" :style="img(item.image)"
 					@touchstart="deleteStart(item.id)" @touchend="deleteEnd">
 					<div @click="turnPage(item.id)">
 						<h2>{{item.destination}}</h2>
@@ -15,10 +15,10 @@
 					</div>
 				</div>
 				<div class="food disable" v-if="curDeleteNum === item.id" @click="cancel">
-					<div class="iconContainer"><img src="../assets/images/delete.png" @click="deleted"></div>
+					<div class="icon_container"><img src="../assets/images/delete.png" @click="deleted"></div>
 				</div>
 			</div>
-			<div :class="['food','add',{'addDisable':curDeleteNum === foodList.length - 1}]" v-permission:operation="'food_add'">
+			<div :class="['food','add',{'add_disable':curDeleteNum === foodList.length - 1}]" v-permission:operation="'food_add'">
 				<router-link to="/add/food"><img src="../assets/images/add.png"></router-link>
 			</div>
 		</div>
@@ -116,7 +116,7 @@
 		}
 	}
 
-	.foodTypeAct{
+	.food_type_act{
 		height: 116px;
 	}
 
@@ -144,7 +144,7 @@
 		}
 	}
 
-	.foodDisable {
+	.food_disable {
 		margin-top: -10rem;
 	}
 
@@ -154,7 +154,7 @@
 		top: -10rem;
 		left: 0;
 
-		.iconContainer {
+		.icon_container {
 			background-color: red;
 			margin: 2.6rem auto;
 			width: 4rem;
@@ -176,7 +176,7 @@
 		}
 	}
 
-	.addDisable {
+	.add_disable {
 		margin-top: -10rem;
 	}
 </style>

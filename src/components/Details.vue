@@ -14,7 +14,7 @@
         <div class="edit" @click="save" v-permission:operation="path+'_edit'">
             <img
                 :src="editStatus ? require('@/assets/images/trip/save.png') : require('@/assets/images/trip/edit.png')"
-                class="editIcon">
+                class="edit_icon">
         </div>
     </div>
 </template>
@@ -157,34 +157,8 @@
         text-align: center;
         z-index: 100;
 
-        .editIcon {
+        .edit_icon {
             margin-top: 1rem;
-        }
-    }
-
-    .back_wrap {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background-color: rgba(26, 26, 26, 0.6);
-        z-index: 111;
-
-        .backConfirm {
-            position: fixed;
-            width: 60%;
-            height: 8rem;
-            top: 40%;
-            left: 18%;
-            background-color: white;
-            text-align: center;
-
-            button {
-                border: none;
-                margin: 1rem;
-                background-color: #91AE81;
-            }
         }
     }
 </style>

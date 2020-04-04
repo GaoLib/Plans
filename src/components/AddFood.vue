@@ -20,10 +20,10 @@
             <textarea placeholder="Description" class="fill" rows="4" v-model="description"></textarea>
             <div v-for="(value, key,index) in foods" :key="value">
                 <input type="text" @change="title(index)" v-model="foodTitle[index]" class="day">
-                <span :class="index == indexR - 1 ? 'deleteDay' : 'deleteDayhide'" @click="deleteDay(key)">Delete</span>
+                <span :class="index == indexR - 1 ? 'delete_day' : 'delete_day_hide'" @click="delete_day(key)">Delete</span>
                 <textarea class="fill" rows="4" @blur="text(key,index)" v-model="foodText[index]"></textarea>
             </div>
-            <button class="fill morebtn" @click="more">One More Food</button>
+            <button class="fill more_btn" @click="more">One More Food</button>
         </div>
     </div>
 </template>
@@ -57,7 +57,7 @@
             this.indexR++;
         }
 
-        deleteDay(key: string) {
+        delete_day(key: string) {
             Vue.delete(this.foods, key);
             this.indexR--;
         }
@@ -97,7 +97,7 @@
             opacity: 0;
         }
 
-        .morebtn {
+        .more_btn {
             margin-top: 1rem;
             border: none;
             background-color: #91AE81;
@@ -110,7 +110,7 @@
             margin-top: 0.4rem;
         }
 
-        .deleteDay {
+        .delete_day {
             float: right;
             margin-right: 6%;
             color: #91AE81;
@@ -118,7 +118,7 @@
             display: block;
         }
 
-        .deleteDayhide {
+        .delete_day_hide {
             float: right;
             margin-right: 6%;
             color: #91AE81;

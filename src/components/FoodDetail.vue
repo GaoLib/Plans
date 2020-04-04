@@ -2,7 +2,7 @@
 	<div class="plan">
         <img :src="require('@/assets/images/trip/'+curFood.image+'.jpg')" />
         <h1>{{curFood.destination}}</h1>
-        <div class="addressContent">
+        <div class="address_content">
             <icon name="position" class="position" scale="3"></icon>
             <textarea placeholder="Address Here" :disabled="!editStatus" class="address" :value="curFood.address"></textarea>
         </div>
@@ -15,7 +15,7 @@
             <textarea v-model="curFood.reasons[index]" class="value" :disabled="!editStatus"></textarea>
         </div>
         </div>
-        <button class="morebtn" v-if="editStatus" @click="more">One More Food</button>
+        <button class="more_btn" v-if="editStatus" @click="more">One More Food</button>
     </div>
 </template>
 
@@ -76,7 +76,7 @@ export default class FoodDetail extends Vue {
         width:100%;
         height:10rem;
     }
-    .addressContent{
+    .address_content{
         width:100%;
 
         .position{
@@ -126,7 +126,7 @@ export default class FoodDetail extends Vue {
             }
         }
     }
-    .morebtn{
+    .more_btn{
         margin-top:1rem;
         border:none;
         background-color: #91AE81; 

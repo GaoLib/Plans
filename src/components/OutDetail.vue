@@ -1,5 +1,5 @@
 <template>
-	<div class="outD">
+	<div class="out_detail">
         <img :src="require('@/assets/images/trip/'+curOut.image+'.jpg')">
         <div class="name">
             <h2>{{curOut.title}}</h2>
@@ -40,7 +40,7 @@ export default class OutDetail extends Vue {
 </script>
 
 <style scoped lang="scss">
-.outD{
+.out_detail{
     width:100%;
     background-color: rgba(86,110,74,0.6);
     text-align:center;
