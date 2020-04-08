@@ -1,5 +1,5 @@
 export interface UserState {
-    token: string,
+    token: string | null,
     routeList: string
     roles: string
     routes: any[],

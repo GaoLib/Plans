@@ -7,10 +7,10 @@ const state: CommonState = {
 }
 
 const mutations: MutationTree<CommonState> = {
-	change_edit_state(state: any, editStatus: boolean) {
+	change_edit_state(state: CommonState, editStatus: boolean) {
 		state.editStatus = editStatus
 	},
-	set_page(state: any, page: string){
+	set_page(state: CommonState, page: string){
 		state.page = page
 	}
 }

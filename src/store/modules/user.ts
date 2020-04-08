@@ -14,26 +14,26 @@ const state: UserState = {
 }
 
 const mutations: MutationTree<UserState> = {
-	set_token(state: any, token: string) {
+	set_token(state: UserState, token: string) {
 		state.token = token
 		sessionStorage.setItem('token',token)
 	},
-	get_token(state: any){
+	get_token(state: UserState){
 		state.token = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : ''
 	},
-	set_routes(state: any, addRoutes: any[]){
+	set_routes(state: UserState, addRoutes: any[]){
 		state.routes = constantRouterMap.concat(addRoutes)
 	},
-	set_route_list(state: any, routes: string){
+	set_route_list(state: UserState, routes: string){
 		state.routeList = routes 
 	},
-	set_roles(state: any, roles: string){
+	set_roles(state: UserState, roles: string){
 		state.roles = roles
 	},
-	set_operation_list(state: any, operationList: string){
+	set_operation_list(state: UserState, operationList: string){
 		state.operationList = operationList
     },
-    reset_user(state: any){
+    reset_user(state: UserState){
         state.token = ''
         state.routes = []
         state.routeList = ''
@@ -46,10 +46,10 @@ const mutations: MutationTree<UserState> = {
 function filterAsyncRouter(asyncRouters: any, routeNames: any) {
 	return asyncRouters.reduce((prevArr: any[], curVal: any) => {  
 		let obj: any = {}
-		let findFlag = routeNames.find((name: any) => {
+		const findFlag = routeNames.find((name: any) => {
 			return name === curVal.name || curVal.path === '*'
 		})
-		if (!!findFlag) {
+		if (findFlag) {
 			obj = curVal
 			if (obj.children) {
 				obj.children = filterAsyncRouter(curVal.children, routeNames)
@@ -95,10 +95,10 @@ const actions: ActionTree<UserState, any> = {
         });
     },
     GenerateRoutes({ commit }, permission: any){
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             let accessedRouters, menus
-            let isAdmin = permission.find((item: any) => item.role === 'admin')
-            if(!!isAdmin){
+            const isAdmin = permission.find((item: any) => item.role === 'admin')
+            if(isAdmin){
                 accessedRouters = asyncRouterMap
             } else {
                 menus = store.getters.routeList.split(',')
@@ -107,17 +107,17 @@ const actions: ActionTree<UserState, any> = {
             commit('set_routes', accessedRouters.push({ path: '*', redirect: '/404' })) // 一定要最后加载
 			resolve(accessedRouters)
         })
-    },
+    }, 
     logout({ commit }) {
         return new Promise((resolve, reject) => {
-            logout().then(() => {
+            logout().then(() => { 
                 commit('reset_user')
                 resolve()
             }).catch(error => {
                 reject(error)
             })
         })
-    },
+    }
 }
 
 export default {

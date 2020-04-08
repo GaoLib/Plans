@@ -44,7 +44,7 @@
 		"no-duplicate-super": true, 
 		"no-empty":true, 
 		"no-eval": true, 
-		"no-explicit-any": false,
+		"no-any": false,
 		"no-floating-promises": false, 
 		"no-for-in-array": false, 
 		"no-implicit-dependencies": false, 
