@@ -44,7 +44,7 @@ export default class Add extends Vue {
     @Watch('curTrip', {
         deep: true
     })
-    watchTrip(oldVal: Trip, newVal: Trip){
+    watchTrip(newVal: Trip){
         this.count = Object.keys(newVal.route).length
     }
 
